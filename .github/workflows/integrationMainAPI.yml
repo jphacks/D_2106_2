@@ -1,0 +1,53 @@
+name: Integration of Main API
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: Setup Node
+        uses: actions/setup-node@v2
+        with:
+          node-version: "14.x"
+
+      - name: Setup test tools
+        run: |
+          sudo npm install -g newman
+          curl -H "X-Api-Key:$POSTMAN_API_KEY" https://api.getpostman.com/collections/$POSTMAN_COLLECTION_ID > collection.json
+        env:
+          POSTMAN_API_KEY: ${{ secrets.POSTMAN_API_KEY }}
+          POSTMAN_COLLECTION_ID: ${{ secrets.POSTMAN_COLLECTION_ID }}
+        working-directory: ./main_api
+
+      - name: E2E Test
+        run: |
+          touch .env
+          echo "DB_USER=$DB_USER" >> .env
+          echo "DB_PASS=$DB_PASS" >> .env
+          echo "DB_HOST=$DB_HOST" >> .env
+          echo "DB_NAME=$DB_NAME" >> .env
+          echo "DB_PORT=$DB_PORT" >> .env
+          docker-compose up -d --remove-orphans
+          sleep 60
+          newman run ./collection.json
+        env:
+          DB_USER: ${{ secrets.DB_USER }}
+          DB_PASS: ${{ secrets.DB_PASS }}
+          DB_HOST: ${{ secrets.DB_HOST }}
+          DB_NAME: ${{ secrets.DB_NAME }}
+          DB_PORT: ${{ secrets.DB_PORT }}
+        working-directory: ./main_api
+
+      - name: clean up
+        run: |
+          docker compose down
+          rm -f ./collection.json
+          rm -f ./main_api/.env
+        working-directory: ./main_api

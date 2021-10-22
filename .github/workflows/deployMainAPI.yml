@@ -51,9 +51,11 @@ jobs:
         
     - name: Setup ECS task definition
       id: set-task-def
+      env:
+        TASK_DEFINITION_JSON: ${{ secrets.MAIN_API_TASKDEFINITION }}
       run: |
         touch ${{ env.ECS_TASK_DEFINITION }}
-        echo ${{ secrets.MAIN_API_TASKDEFINITION }} > ${{ env.ECS_TASK_DEFINITION }}
+        echo $TASK_DEFINITION_JSON > ${{ env.ECS_TASK_DEFINITION }}
 
     - name: Fill in the new image ID in the Amazon ECS task definition
       id: task-def

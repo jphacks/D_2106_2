@@ -11,13 +11,9 @@ env:
   AWS_REGION: ap-northeast-1
   ECR_REPOSITORY: ${{ secrets.ECR_REPOSITORY }}
   ECS_SERVICE: main_api
-  ECS_CLUSTER: ./jphacks2021-server
-  ECS_TASK_DEFINITION: ./taskdefinition.json
+  ECS_CLUSTER: jphacks2021-server
+  ECS_TASK_DEFINITION: task-definition.json
   CONTAINER_NAME: main_api
-  
-defaults:
-  run:
-    working-directory: ./main_api
 
 jobs:
   deploy:
@@ -49,7 +45,7 @@ jobs:
         # Build a docker container and
         # push it to ECR so that it can
         # be deployed to ECS.
-        docker build -t $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG -f ./Dockerfile.prod .
+        docker build -t $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG -f ./main_api/Dockerfile.prod ./main_api
         docker push $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG
         echo "::set-output name=image::$ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG"
         
@@ -57,7 +53,7 @@ jobs:
       id: set-task-def
       run: |
         touch ${{ env.ECS_TASK_DEFINITION }}
-        echo ${{ secrets.ECS_TASKDEFINITION }} > ${{ env.ECS_TASK_DEFINITION }}
+        echo ${{ secrets.MAIN_API_TASKDEFINITION }} > ${{ env.ECS_TASK_DEFINITION }}
 
     - name: Fill in the new image ID in the Amazon ECS task definition
       id: task-def

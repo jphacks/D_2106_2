@@ -12,7 +12,7 @@ env:
   ECR_REPOSITORY: ${{ secrets.ECR_REPOSITORY }}
   ECS_SERVICE: main_api
   ECS_CLUSTER: ./jphacks2021-server
-  ECS_TASK_DEFINITION: taskdefinition.json
+  ECS_TASK_DEFINITION: ./taskdefinition.json
   CONTAINER_NAME: main_api
   
 defaults:
@@ -57,7 +57,7 @@ jobs:
       id: set-task-def
       run: |
         touch ${{ env.ECS_TASK_DEFINITION }}
-        cat ${{ secrets.ECS_TASKDEFINITION }} >> ${{ env.ECS_TASK_DEFINITION }}
+        echo ${{ secrets.ECS_TASKDEFINITION }} > ${{ env.ECS_TASK_DEFINITION }}
 
     - name: Fill in the new image ID in the Amazon ECS task definition
       id: task-def

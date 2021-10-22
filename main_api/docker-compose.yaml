@@ -1,0 +1,43 @@
+version: "3"
+services:
+  mysql:
+    build: ../mysql
+    container_name: jphacks2021_db
+    hostname: ${DB_HOST}
+    environment:
+      MYSQL_ROOT_PASSWORD: ${DB_PASS}
+      MYSQL_DATABASE: ${DB_NAME}
+      MYSQL_USER: ${DB_USER}
+      MYSQL_PASSWORD: ${DB_PASS}
+    ports:
+      - "3306:3306"
+    volumes:
+      - ../mysql/sql:/docker-entrypoint-initdb.d
+    networks:
+      - default
+
+  api:
+    build: .
+    container_name: jphacks2021_main_api_local
+    hostname: main_api_host
+    environment:
+      TZ: Asia/Tokyo
+    ports:
+      - "8080:8080"
+    volumes:
+      - .:/go/src/github.com/jphacks/D_2106_2
+    depends_on:
+      - mysql
+    command: fresh
+
+  flask_api:
+    build: ../data_api
+    container_name: jphacks2021_data_api_local
+    hostname: flask_host
+    environment:
+      TZ: Asia/Tokyo
+    ports:
+      - "5000:5000"
+    volumes:
+      - ../data_api:/app
+    tty: true

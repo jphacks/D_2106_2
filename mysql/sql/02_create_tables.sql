@@ -30,6 +30,6 @@ CREATE TABLE IF NOT EXISTS users (
 
 CREATE TABLE IF NOT EXISTS friends (
     id INT AUTO_INCREMENT NOT NULL PRIMARY KEY,
-    used_id INT NOT NULL,
+    user_id INT NOT NULL,
     follow_user_id INT NOT NULL
 );

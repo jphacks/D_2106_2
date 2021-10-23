@@ -1,19 +1,19 @@
-name: Deploy MainAPI to Amazon ECS
+name: Deploy DataAPI to Amazon ECS
 
 on:
   push:
     branches:
       - main
     paths:
-      - "./main_api/**"
+      - "./data_api/**"
 
 env:
   AWS_REGION: ap-northeast-1
-  ECR_REPOSITORY: ${{ secrets.ECR_REPOSITORY }}
-  ECS_SERVICE: main_api
+  ECR_REPOSITORY: ${{ secrets.DATA_API_ECR_REPOSITORY }}
+  ECS_SERVICE: data_api
   ECS_CLUSTER: jphacks2021-server
   ECS_TASK_DEFINITION: task-definition.json
-  CONTAINER_NAME: main_api
+  CONTAINER_NAME: data_api
 
 jobs:
   deploy:
@@ -45,14 +45,14 @@ jobs:
           # Build a docker container and
           # push it to ECR so that it can
           # be deployed to ECS.
-          docker build -t $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG -f ./main_api/Dockerfile.prod ./main_api
+          docker build -t $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG -f ./data_api/Dockerfile.prod ./data_api
           docker push $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG
           echo "::set-output name=image::$ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG"
 
       - name: Setup ECS task definition
         id: set-task-def
         env:
-          TASK_DEFINITION_JSON: ${{ secrets.MAIN_API_TASKDEFINITION }}
+          TASK_DEFINITION_JSON: ${{ secrets.DATA_API_TASKDEFINITION }}
         run: |
           touch ${{ env.ECS_TASK_DEFINITION }}
           echo $TASK_DEFINITION_JSON > ${{ env.ECS_TASK_DEFINITION }}

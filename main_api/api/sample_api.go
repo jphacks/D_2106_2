@@ -12,7 +12,7 @@ type SampleBody struct {
 }
 
 func FetchSampleApi() string {
-	resp, err := http.Get("http://flask_host:5000/")
+	resp, err := http.Get("http://localhost:5000/")
 	if err != nil {
 		log.Fatal(err)
 	}

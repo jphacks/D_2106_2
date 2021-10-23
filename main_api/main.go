@@ -58,8 +58,16 @@ func main() {
 		})
 	})
 
-	r.GET("/fetch", func(c *gin.Context) {
-		data := api.FetchSampleApi()
+	checkFlaskApi := r.Group("/check_flask_api")
+	checkFlaskApi.GET("/get_sample", func(c *gin.Context) {
+		data := api.GetSampleApi()
+		c.JSON(http.StatusOK, data)
+	})
+	checkFlaskApi.GET("/clustering", func(c *gin.Context) {
+		data, err := api.GetClusteringApi()
+		if err != nil {
+			fmt.Println(err)
+		}
 		c.JSON(http.StatusOK, data)
 	})
 

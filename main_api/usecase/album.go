@@ -37,3 +37,13 @@ func (uc *AlbumUsecase) CreateNewAlbum(
 
 	return albumId, nil
 }
+
+// ClusteringGpsPoint clusters gps points
+func (uc *AlbumUsecase) ClusteringGpsPoint(
+	LatitudeMin float64,
+	LatitudeMax float64,
+	LongitudeMin float64,
+	LongitudeMax float64,
+) (int, error) {
+	return 0, nil
+}

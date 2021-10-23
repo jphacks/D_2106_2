@@ -16,9 +16,10 @@ type Config struct {
 }
 
 type AwsConfig struct {
-	ACCESS_KEY string
-	SECRET_KEY string
-	REGION     string
+	ACCESS_KEY    string
+	SECRET_KEY    string
+	REGION        string
+	S3BUCKET_MAME string
 }
 
 func GetConfig() (*Config, error) {
@@ -46,9 +47,10 @@ func GetAwsConfig() (*AwsConfig, error) {
 	}
 
 	config := &AwsConfig{
-		ACCESS_KEY: os.Getenv("AWS_ACCESS_KEY"),
-		SECRET_KEY: os.Getenv("AWS_SECRET_KEY"),
-		REGION:     os.Getenv("AWS_REGION"),
+		ACCESS_KEY:    os.Getenv("AWS_ACCESS_KEY"),
+		SECRET_KEY:    os.Getenv("AWS_SECRET_KEY"),
+		REGION:        os.Getenv("AWS_REGION"),
+		S3BUCKET_MAME: os.Getenv("AWS_S3BUCKET_NAME"),
 	}
 
 	return config, nil

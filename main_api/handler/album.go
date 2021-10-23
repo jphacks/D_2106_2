@@ -37,7 +37,25 @@ func NewAlbumHandler(albumRepo repository.AlbumRepository, coordinateRepo reposi
 }
 
 func (handler *AlbumHandler) GetAllAlbums(c *gin.Context) {
-	c.JSON(http.StatusOK, gin.H{"data": "data"})
+	albums, err := handler.uc.GetAllAlbums()
+	if err != nil {
+		log.Print(err)
+		c.JSON(500, gin.H{"err": err.Error()})
+	}
+
+	c.JSON(http.StatusOK, gin.H{"data": albums})
+}
+
+func (handler *AlbumHandler) GetUserAlbums(c *gin.Context) {
+	userIdStr := c.Query("album_id")
+	userId, _ := strconv.Atoi(userIdStr)
+	albums, err := handler.uc.GetUserAlbums(userId)
+	if err != nil {
+		log.Print(err)
+		c.JSON(500, gin.H{"err": err.Error()})
+	}
+
+	c.JSON(http.StatusOK, gin.H{"data": albums})
 }
 
 func (handler *AlbumHandler) GetAlbum(c *gin.Context) {

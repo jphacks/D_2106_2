@@ -48,6 +48,24 @@ func (uc *AlbumUsecase) CreateNewAlbum(
 	return albumId, nil
 }
 
+func (uc *AlbumUsecase) GetAllAlbums() ([]*domain.Album, error) {
+	album, err := uc.AlbumRepo.GetAllAlbums()
+	if err != nil {
+		return nil, err
+	}
+
+	return album, nil
+}
+
+func (uc *AlbumUsecase) GetUserAlbums(userId int) ([]*domain.Album, error) {
+	album, err := uc.AlbumRepo.GetAlbumsByUsers(userId)
+	if err != nil {
+		return nil, err
+	}
+
+	return album, nil
+}
+
 // ClusteringGpsPoint clusters gps points
 func (uc *AlbumUsecase) ClusteringGpsPoint(
 	albumId int,

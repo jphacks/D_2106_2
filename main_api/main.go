@@ -63,6 +63,9 @@ func main() {
 		})
 	})
 
+// 
+
+// 
 	r.POST("/register", func(c *gin.Context) { userHandler.RegisterUser(c, authMiddleware) })
 	r.POST("/login", authMiddleware.LoginHandler)
 

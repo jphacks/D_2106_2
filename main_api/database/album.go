@@ -1,6 +1,8 @@
 package database
 
 import (
+	"fmt"
+
 	"github.com/jphacks/D_2106_2/domain"
 	"github.com/jphacks/D_2106_2/repository"
 )
@@ -14,6 +16,7 @@ func NewAlbumRepository(sqlHandler SqlHandler) repository.AlbumRepository {
 }
 
 func (repo *AlbumRepository) StoreAlbum(album *domain.Album) (int, error) {
+	fmt.Println(album)
 	result := repo.SqlHandler.Conn.Create(&album)
 	if err := result.Error; err != nil {
 		return -1, nil

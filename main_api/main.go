@@ -38,9 +38,12 @@ func main() {
 
 	// handlers
 	userRepo := database.NewUserRepository(*sqlHandler)
+	albumRepo := database.NewAlbumRepository(*sqlHandler)
+	coordinateRepo := database.NewCoordinateRepository(*sqlHandler)
+
 	authHandler := handler.NewAuthHandler(userRepo)
 	userHandler := handler.NewUserHandler(userRepo)
-	albumHandler := handler.NewAlbumHandler()
+	albumHandler := handler.NewAlbumHandler(albumRepo, coordinateRepo)
 	imageHandler := handler.NewImageHandler()
 
 	// auth middleware

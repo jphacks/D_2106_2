@@ -6,6 +6,10 @@ import (
 	"strconv"
 
 	"github.com/gin-gonic/gin"
+
+	"github.com/jphacks/D_2106_2/domain"
+	"github.com/jphacks/D_2106_2/repository"
+
 	"github.com/jphacks/D_2106_2/usecase"
 )
 
@@ -13,22 +17,23 @@ type AlbumHandler struct {
 	uc usecase.AlbumUsecase
 }
 
-type Coordinate struct {
-	Latitude  int
-	Longitude int
-	Timestamp string
-}
-
 type PostAlbumRequest struct {
-	Locations []Coordinate
-	Title     string
-	StartAt   string
-	EndAt     string
-	IsPublic  bool
+	Locations []*domain.Location `json:"locations"`
+	UserId    int                `json:"userId"`
+	Title     string             `json:"title"`
+	StartAt   string             `json:"startedAt"`
+	EndAt     string             `json:"endedAt"`
+	IsPublic  bool               `json:"isPublic"`
 }
 
-func NewAlbumHandler() *AlbumHandler {
-	return &AlbumHandler{}
+type PostAlbumResponse struct {
+	Id int `json:"id"`
+}
+
+func NewAlbumHandler(albumRepo repository.AlbumRepository, coordinateRepo repository.CoordinateRepository) *AlbumHandler {
+	uc := usecase.AlbumUsecase{AlbumRepo: albumRepo, CoordinateRepo: coordinateRepo}
+
+	return &AlbumHandler{uc: uc}
 }
 
 func (handler *AlbumHandler) GetAllAlbums(c *gin.Context) {
@@ -59,5 +64,13 @@ func (handler *AlbumHandler) PostAlbum(c *gin.Context) {
 		c.JSON(500, gin.H{"err": err.Error()})
 	}
 
-	c.JSON(http.StatusOK, gin.H{"data": "data"})
+	albumId, err := handler.uc.CreateNewAlbum(req.Locations, req.UserId, req.Title, req.StartAt, req.EndAt, req.IsPublic)
+	if err != nil {
+		log.Print(err)
+		c.JSON(500, gin.H{"err": err.Error()})
+	}
+
+	res := &PostAlbumResponse{Id: albumId}
+
+	c.JSON(http.StatusOK, gin.H{"data": res})
 }

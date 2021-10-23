@@ -1,6 +1,6 @@
 FROM ubuntu:18.04
 
-WORKDIR /usr/src/flask_ml_server
+WORKDIR /app
 
 RUN apt update
 RUN apt install -y python3 curl python3-distutils

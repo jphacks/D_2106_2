@@ -3,10 +3,13 @@ package handler
 import (
 	"log"
 	"net/http"
+	"strconv"
 
 	"github.com/gin-gonic/gin"
+
 	"github.com/jphacks/D_2106_2/domain"
 	"github.com/jphacks/D_2106_2/repository"
+
 	"github.com/jphacks/D_2106_2/usecase"
 )
 
@@ -44,12 +47,12 @@ func (handler *AlbumHandler) GetAlbum(c *gin.Context) {
 }
 
 func (handler *AlbumHandler) GetAlbumDetail(c *gin.Context) {
-	// albumId := c.Query("album_id")
-	// lat1 := c.Query("lat1")
-	// lon1 := c.Query("lon1")
-	// lat2 := c.Query("lat2")
-	// lon2 := c.Query("lon2")
-
+	albumId, _ := strconv.Atoi(c.Query("album_id"))
+	lat1, _ := strconv.ParseFloat(c.Query("lat1"), 64)
+	lon1, _ := strconv.ParseFloat(c.Query("lon1"), 64)
+	lat2, _ := strconv.ParseFloat(c.Query("lat2"), 64)
+	lon2, _ := strconv.ParseFloat(c.Query("lon2"), 64)
+	handler.uc.ClusteringGpsPoint(albumId, lat1, lat2, lon1, lon2)
 	c.JSON(http.StatusOK, gin.H{"data": "data"})
 }
 

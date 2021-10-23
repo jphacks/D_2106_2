@@ -65,11 +65,6 @@ func main() {
 		})
 	})
 
-<<<<<<< HEAD
-// 
-
-// 
-=======
 	r.GET("/albums", func(c *gin.Context) { albumHandler.GetAllAlbums(c) })
 	r.GET("/album", func(c *gin.Context) { albumHandler.GetAlbum(c) })
 	r.GET("/album/detail", func(c *gin.Context) { albumHandler.GetAlbumDetail(c) })
@@ -77,7 +72,6 @@ func main() {
 
 	r.POST("/upload/image", func(c *gin.Context) { imageHandler.UploadImages(c) })
 
->>>>>>> edd5a62b99d2ba0026298168db243619c3587037
 	r.POST("/register", func(c *gin.Context) { userHandler.RegisterUser(c, authMiddleware) })
 	r.POST("/login", authMiddleware.LoginHandler)
 

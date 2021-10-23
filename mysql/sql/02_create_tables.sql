@@ -3,7 +3,8 @@ CREATE TABLE IF NOT EXISTS coordinates (
     album_id INT NOT NULL,
     timestamp TIMESTAMP NOT NULL,
     latitude FLOAT NOT NULL,
-    longitude FLOAT NOT NULL
+    longitude FLOAT NOT NULL,
+    is_show BOOLEAN NOT NULL DEFAULT false
 );
 
 CREATE TABLE IF NOT EXISTS albums (

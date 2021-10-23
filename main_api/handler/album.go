@@ -1,7 +1,6 @@
 package handler
 
 import (
-	"fmt"
 	"log"
 	"net/http"
 	"strconv"
@@ -48,8 +47,7 @@ func (handler *AlbumHandler) GetAlbumDetail(c *gin.Context) {
 	lon1, _ := strconv.ParseFloat(c.Query("lon1"), 64)
 	lat2, _ := strconv.ParseFloat(c.Query("lat2"), 64)
 	lon2, _ := strconv.ParseFloat(c.Query("lon2"), 64)
-	handler.uc.ClusteringGpsPoint(lat1, lat2, lon1, lon2)
-	fmt.Println(albumId)
+	handler.uc.ClusteringGpsPoint(albumId, lat1, lat2, lon1, lon2)
 	c.JSON(http.StatusOK, gin.H{"data": "data"})
 }
 

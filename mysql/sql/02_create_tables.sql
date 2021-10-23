@@ -19,7 +19,8 @@ CREATE TABLE IF NOT EXISTS images (
     id INT AUTO_INCREMENT NOT NULL PRIMARY KEY,
     url VARCHAR(128) NOT NULL,
     album_id INT NOT NULL,
-    created_at TIMESTAMP NOT NULL
+    created_at TIMESTAMP NOT NULL,
+    coordinate_id INT NOT NULL
 );
 
 CREATE TABLE IF NOT EXISTS users (

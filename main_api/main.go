@@ -64,7 +64,7 @@ func main() {
 		c.JSON(http.StatusOK, data)
 	})
 	checkFlaskApi.GET("/clustering", func(c *gin.Context) {
-		data, err := api.GetClusteringApi()
+		data, err := api.GetCheckClusteringApi()
 		if err != nil {
 			fmt.Println(err)
 		}

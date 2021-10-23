@@ -7,11 +7,17 @@ import (
 	"net/http"
 )
 
-type SampleBody struct {
-	Message string `json:"message"`
+type Gps struct {
+	GpsId int `json:"gps_id"`
+	Latitude float32 `json:latitude`
+	Longitude float32 `json:longitude`
 }
 
-func FetchSampleApi() string {
+type GpsData struct {
+	GpsData []Gps `json:"gps_data"`
+}
+
+func FetchSampleApi() GpsData {
 	resp, err := http.Get("http://flask_host:5000/api/get_sample")
 	if err != nil {
 		log.Fatal(err)
@@ -22,11 +28,11 @@ func FetchSampleApi() string {
 		log.Fatal(err)
 	}
 
-	var data SampleBody
+	var data GpsData
 
 	if err := json.Unmarshal(body, &data); err != nil {
 		log.Fatal(err)
 	}
 
-	return data.Message
+	return data
 }

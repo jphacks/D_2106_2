@@ -17,9 +17,14 @@ func (uc *ImageUsecase) UploadImages(albumId int, images []multipart.File, names
 		3. 画面と座標を紐付ける
 	*/
 
-	// imageUrl, err := api.S3Uploader(images, names)
+	// api.S3Uploader sample
+	// imageUrls, err := api.S3Uploader(images, names)
 	// if err != nil {
 	// 	fmt.Println(err)
+	// }
+
+	// for _, url := range imageUrls {
+	// 	fmt.Println(url)
 	// }
 
 	return nil

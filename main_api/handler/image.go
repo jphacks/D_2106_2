@@ -22,17 +22,21 @@ func NewImageHandler(imageRepo repository.ImageRepository) *ImageHandler {
 }
 
 func (handler *ImageHandler) UploadImages(c *gin.Context) {
-	image1, header1, err := c.Request.FormFile("image1")
-	if err != nil {
-		log.Print(err)
-		c.JSON(500, gin.H{"err": err.Error()})
-	}
-
 	var images []multipart.File
-	images = append(images, image1)
-
 	var names []string
-	names = append(names, header1.Filename)
+	var err error
+
+	for i := 0; i < 5; i++ {
+		filename := "image" + strconv.Itoa(i+1)
+		image, header, err := c.Request.FormFile(filename)
+		if err != nil {
+			log.Print(err)
+			c.JSON(500, gin.H{"err": err.Error()})
+			return
+		}
+		images = append(images, image)
+		names = append(names, header.Filename)
+	}
 
 	albumIdStr := c.PostForm("album_id")
 	albumId, _ := strconv.Atoi(albumIdStr)

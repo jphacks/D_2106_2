@@ -1,6 +1,7 @@
 package database
 
 import (
+	"fmt"
 	"os"
 
 	"github.com/jphacks/D_2106_2/config"
@@ -27,6 +28,7 @@ func NewSqlClient(config *config.Config) (*SqlHandler, error) {
 	DB_PORT := config.DB_PORT
 	dsn := USER + ":" + PASS + "@tcp(" + HOST + ":" + DB_PORT + ")/" + DBNAME
 	dsn += "?charset=utf8mb4&parseTime=True&loc=Local"
+	fmt.Println(dsn)
 	db, err := gorm.Open(mysql.Open(dsn), &gorm.Config{
 		Logger: logger.Default.LogMode(logger.Info),
 	})

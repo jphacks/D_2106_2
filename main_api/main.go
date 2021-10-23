@@ -40,6 +40,8 @@ func main() {
 	userRepo := database.NewUserRepository(*sqlHandler)
 	authHandler := handler.NewAuthHandler(userRepo)
 	userHandler := handler.NewUserHandler(userRepo)
+	albumHandler := handler.NewAlbumHandler()
+	imageHandler := handler.NewImageHandler()
 
 	// auth middleware
 	authMiddleware, err := middleware.GetAuthMiddleware(*authHandler)
@@ -62,6 +64,13 @@ func main() {
 			"message": message,
 		})
 	})
+
+	r.GET("/albums", func(c *gin.Context) { albumHandler.GetAllAlbums(c) })
+	r.GET("/album", func(c *gin.Context) { albumHandler.GetAlbum(c) })
+	r.GET("/album/detail", func(c *gin.Context) { albumHandler.GetAlbumDetail(c) })
+	r.POST("/album", func(c *gin.Context) { albumHandler.PostAlbum(c) })
+
+	r.POST("/upload/image", func(c *gin.Context) { imageHandler.UploadImages(c) })
 
 	r.POST("/register", func(c *gin.Context) { userHandler.RegisterUser(c, authMiddleware) })
 	r.POST("/login", authMiddleware.LoginHandler)

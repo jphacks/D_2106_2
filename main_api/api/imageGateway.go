@@ -13,10 +13,10 @@ import (
 type S3Client struct {
 }
 
-func S3Uploader(images []multipart.File, names []string) (string, error) {
+func S3Uploader(images []multipart.File, names []string) ([]string, error) {
 	config, err := config.GetAwsConfig()
 	if err != nil {
-		return "", err
+		return nil, err
 	}
 
 	sess := session.Must(session.NewSession(&aws.Config{
@@ -30,23 +30,26 @@ func S3Uploader(images []multipart.File, names []string) (string, error) {
 
 	uploader := s3manager.NewUploader(sess)
 
-	name := names[0]
-	image := images[0]
-
 	// Upload the file to S3.
-	res, err := uploader.Upload(&s3manager.UploadInput{
-		ACL:         aws.String("public-read"),
-		Bucket:      aws.String(config.S3BUCKET_MAME),
-		Key:         aws.String("images/" + name),
-		Body:        image,
-		ContentType: aws.String("image/png"),
-	})
-
-	if err != nil {
-		return "", err
+	c := make(chan *s3manager.UploadOutput)
+	imageUrls := make([]string, len(images))
+	for i, image := range images {
+		go func(i int, image multipart.File, c chan *s3manager.UploadOutput) {
+			res, _ := uploader.Upload(&s3manager.UploadInput{
+				ACL:         aws.String("public-read"),
+				Bucket:      aws.String(config.S3BUCKET_MAME),
+				Key:         aws.String("images/" + names[i]),
+				Body:        image,
+				ContentType: aws.String("image/png"),
+			})
+			c <- res
+		}(i, image, c)
 	}
 
-	imageUrl := res.Location
+	for range images {
+		result := <-c
+		imageUrls = append(imageUrls, result.Location)
+	}
 
-	return imageUrl, nil
+	return imageUrls, nil
 }

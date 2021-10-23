@@ -28,11 +28,6 @@ func main() {
 		// log.Fatal(err)
 		fmt.Println(err)
 	}
-	// db, err := sqlHandler.Conn.DB()
-	// if err != nil {
-	// 	fmt.Println(err)
-	// }
-	// defer db.Close()
 
 	r := gin.Default()
 

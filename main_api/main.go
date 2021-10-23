@@ -59,10 +59,8 @@ func main() {
 	})
 
 	r.GET("/fetch", func(c *gin.Context) {
-		message := api.FetchSampleApi()
-		c.JSON(http.StatusOK, gin.H{
-			"message": message,
-		})
+		data := api.FetchSampleApi()
+		c.JSON(http.StatusOK, data)
 	})
 
 	r.GET("/albums", func(c *gin.Context) { albumHandler.GetAllAlbums(c) })

@@ -6,6 +6,8 @@ import (
 	"io/ioutil"
 	"log"
 	"net/http"
+
+	"github.com/jphacks/D_2106_2/domain"
 )
 
 type Gps struct {
@@ -49,41 +51,6 @@ func GetSampleApi() GpsData {
 	return data
 }
 
-// func GetCheckClusteringApi() (*ClusterData, error) {
-// 	resp, err := http.Get("http://flask_host:5000/api/get_sample")
-// 	if err != nil {
-// 		log.Fatal(err)
-// 	}
-// 	defer resp.Body.Close()
-// 	body, err := ioutil.ReadAll(resp.Body)
-// 	if err != nil {
-// 		log.Fatal(err)
-// 	}
-// 	req, err := http.NewRequest(
-// 		"POST",
-// 		"http://flask_host:5000/api/clustering",
-// 		bytes.NewBuffer(body),
-// 	)
-// 	client := &http.Client{}
-// 	resp, err = client.Do(req)
-// 	if err != nil {
-// 		return nil, err
-// 	}
-// 	defer resp.Body.Close()
-
-// 	body, err = ioutil.ReadAll(resp.Body)
-// 	if err != nil {
-// 		log.Fatal(err)
-// 	}
-
-// 	var responseData *ClusterData
-
-// 	if err := json.Unmarshal(body, &responseData); err != nil {
-// 		log.Fatal(err)
-// 	}
-// 	return responseData, nil
-// }
-
 func GetCheckClusteringApi() (*ClusterData, error) {
 	data := GetSampleApi()
 	responseData, err := GetClusteringApi(data)
@@ -121,4 +88,20 @@ func GetClusteringApi(data GpsData) (*ClusterData, error) {
 		log.Fatal(err)
 	}
 	return responseData, nil
+}
+
+func Coordinates2GpsData(coordinates []domain.Coordinate) GpsData {
+	var dataList []Gps
+	for _, coordinate := range coordinates {
+		gps := Gps{
+			GpsId:     coordinate.Id,
+			Latitude:  coordinate.Latitude,
+			Longitude: coordinate.Longitude,
+		}
+		dataList = append(dataList, gps)
+	}
+	data := GpsData{
+		GpsData: dataList,
+	}
+	return data
 }

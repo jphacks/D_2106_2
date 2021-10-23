@@ -29,7 +29,16 @@ func (repo *CoordinateRepository) StoreCoordinates(coordinates []*domain.Coordin
 
 func (repo *CoordinateRepository) GetCoordinateByImageId(imageId int) (*domain.Coordinate, error) {
 	var coordinate *domain.Coordinate
-	result := repo.SqlHandler.Conn.Where("image_id = ?", imageId).Find(coordinate)
+	result := repo.SqlHandler.Conn.Where("image_id = ?", imageId).First(&coordinate)
+	if err := result.Error; err != nil {
+		return nil, err
+	}
+	return coordinate, nil
+}
+
+func (repo *CoordinateRepository) GetCoordinateById(coordinateId int) (*domain.Coordinate, error) {
+	var coordinate *domain.Coordinate
+	result := repo.SqlHandler.Conn.Where("id = ?", coordinateId).First(&coordinate)
 	if err := result.Error; err != nil {
 		return nil, err
 	}

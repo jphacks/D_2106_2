@@ -22,3 +22,13 @@ func (repo *ImageRepository) GetImagesByAlbumId(albumId int) ([]*domain.Image, e
 
 	return images, nil
 }
+
+func (repo *ImageRepository) GetImagesByCoordinateId(coordinateId int) ([]*domain.Image, error) {
+	images := []*domain.Image{}
+	result := repo.SqlHandler.Conn.Where("coordinate_id = ?", coordinateId).Find(&images)
+	if err := result.Error; err != nil {
+		return nil, err
+	}
+
+	return images, nil
+}

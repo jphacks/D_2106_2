@@ -33,7 +33,17 @@ func (uc *AlbumUsecase) CreateNewAlbum(
 		return -1, err
 	}
 
-	// coordinateIds, err := uc.CoordinateRepo.StoreCoordinates(locations)
+	coordinates := make([]*domain.Coordinate, len(locations), len(locations))
+	for i, locate := range locations {
+		coordinates[i] = &domain.Coordinate{
+			AlbumId:   albumId,
+			Timestamp: locate.Timestamp,
+			Latitude:  locate.Latitude,
+			Longitude: locate.Longitude,
+		}
+	}
+
+	_, err = uc.CoordinateRepo.StoreCoordinates(coordinates)
 
 	return albumId, nil
 }

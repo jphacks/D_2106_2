@@ -1,0 +1,35 @@
+CREATE TABLE IF NOT EXISTS coordinates (
+    id INT AUTO_INCREMENT NOT NULL PRIMARY KEY,
+    album_id INT NOT NULL,
+    timestamp TIMESTAMP NOT NULL,
+    latitude FLOAT NOT NULL,
+    longitude FLOAT NOT NULL
+);
+
+CREATE TABLE IF NOT EXISTS albums (
+    id INT AUTO_INCREMENT NOT NULL PRIMARY KEY,
+    user_id INT NOT NULL,
+    title VARCHAR(128) NOT NULL,
+    started_at TIMESTAMP NOT NULL,
+    ended_at TIMESTAMP NOT NULL,
+    is_public BOOLEAN NOT NULL
+);
+
+CREATE TABLE IF NOT EXISTS images (
+    id INT AUTO_INCREMENT NOT NULL PRIMARY KEY,
+    url VARCHAR(128) NOT NULL,
+    album_id INT NOT NULL,
+    created_at TIMESTAMP NOT NULL
+);
+
+CREATE TABLE IF NOT EXISTS users (
+    id INT AUTO_INCREMENT NOT NULL PRIMARY KEY,
+    name VARCHAR(128),
+    password VARCHAR(128)
+);
+
+CREATE TABLE IF NOT EXISTS friends (
+    id INT AUTO_INCREMENT NOT NULL PRIMARY KEY,
+    used_id INT NOT NULL,
+    follow_user_id INT NOT NULL
+);

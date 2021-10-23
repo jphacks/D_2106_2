@@ -9,7 +9,6 @@ import (
 
 	"github.com/jphacks/D_2106_2/domain"
 	"github.com/jphacks/D_2106_2/repository"
-
 	"github.com/jphacks/D_2106_2/usecase"
 )
 

@@ -8,6 +8,7 @@ import (
 type AlbumUsecase struct {
 	AlbumRepo      repository.AlbumRepository
 	CoordinateRepo repository.CoordinateRepository
+	ImageRepo      repository.ImageRepository
 }
 
 func (uc *AlbumUsecase) CreateNewAlbum(
@@ -33,7 +34,7 @@ func (uc *AlbumUsecase) CreateNewAlbum(
 		return -1, err
 	}
 
-	coordinates := make([]*domain.Coordinate, len(locations), len(locations))
+	coordinates := make([]*domain.Coordinate, len(locations))
 	for i, locate := range locations {
 		coordinates[i] = &domain.Coordinate{
 			AlbumId:   albumId,
@@ -44,6 +45,10 @@ func (uc *AlbumUsecase) CreateNewAlbum(
 	}
 
 	_, err = uc.CoordinateRepo.StoreCoordinates(coordinates)
+
+	if err != nil {
+		return -1, err
+	}
 
 	return albumId, nil
 }
@@ -74,6 +79,23 @@ func (uc *AlbumUsecase) ClusteringGpsPoint(
 	longitudeMin float64,
 	longitudeMax float64,
 ) (int, error) {
+	var used_coordinates []domain.Coordinate
+	images, err := uc.ImageRepo.GetImagesByAlbumId(albumId)
+	// a, err := uc.AlbumRepo.GetCoordinatesByImageId
+	for _, image := range images {
+		coordinate, err := uc.CoordinateRepo.GetCoordinateByImageId(image.Id)
+		if (latitudeMin < coordinate.Latitude) && (coordinate.Latitude < longitudeMax) {
+			if (longitudeMin < coordinate.Longitude) && (coordinate.Longitude < longitudeMax) {
+				used_coordinates = append(used_coordinates, *coordinate)
+			}
+		}
+		if err != nil {
+			return -1, err
+		}
+	}
 
-	return 0, nil
+	if err != nil {
+		return -1, err
+	}
+	return -1, nil
 }

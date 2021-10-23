@@ -2,9 +2,11 @@ name: Integration of Main API
 
 on:
   push:
-    branches: [main, develop]
+    # branches: [main, develop]
+    - main
   pull_request:
-    branches: [main, develop]
+    - main
+    # branches: [main, develop]
 
 jobs:
   build:

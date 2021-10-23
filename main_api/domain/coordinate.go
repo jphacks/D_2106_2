@@ -4,12 +4,12 @@ type Coordinate struct {
 	Id        int
 	AlbumId   int
 	Timestamp string
-	Latitude  float32
-	Longitude float32
+	Latitude  float64
+	Longitude float64
 }
 
 type Location struct {
-	Latitude  float32
-	Longitude float32
+	Latitude  float64
+	Longitude float64
 	Timestamp string
 }

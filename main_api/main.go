@@ -16,7 +16,7 @@ import (
 )
 
 func main() {
-	// application setup
+	// database setup
 	config, err := config.GetConfig()
 	if err != nil {
 		// log.Fatal(err)
@@ -29,6 +29,12 @@ func main() {
 		fmt.Println(err)
 	}
 
+	// s3 client
+	s3client, err := api.NewS3client()
+	if err != nil {
+		fmt.Println(err)
+	}
+
 	r := gin.Default()
 
 	// handlers
@@ -36,11 +42,12 @@ func main() {
 	albumRepo := database.NewAlbumRepository(*sqlHandler)
 	coordinateRepo := database.NewCoordinateRepository(*sqlHandler)
 	imageRepo := database.NewImageRepository(*sqlHandler)
+	s3service := api.NewS3service(*s3client)
 
 	authHandler := handler.NewAuthHandler(userRepo)
 	userHandler := handler.NewUserHandler(userRepo)
 	albumHandler := handler.NewAlbumHandler(albumRepo, coordinateRepo, imageRepo)
-	imageHandler := handler.NewImageHandler(imageRepo)
+	imageHandler := handler.NewImageHandler(imageRepo, s3service)
 
 	// auth middleware
 	authMiddleware, err := middleware.GetAuthMiddleware(*authHandler)

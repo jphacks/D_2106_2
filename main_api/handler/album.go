@@ -1,7 +1,6 @@
 package handler
 
 import (
-	"fmt"
 	"log"
 	"net/http"
 	"strconv"
@@ -78,7 +77,6 @@ func (handler *AlbumHandler) GetAlbumDetail(c *gin.Context) {
 	lon1, _ := strconv.ParseFloat(c.Query("lon1"), 64)
 	lat2, _ := strconv.ParseFloat(c.Query("lat2"), 64)
 	lon2, _ := strconv.ParseFloat(c.Query("lon2"), 64)
-	fmt.Println(albumId)
 	if albumId <= 0 {
 		c.JSON(400, gin.H{"err": "album_id is invalid"})
 		return

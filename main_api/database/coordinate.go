@@ -35,3 +35,14 @@ func (repo *CoordinateRepository) GetCoordinateByImageId(imageId int) (*domain.C
 	}
 	return coordinate, nil
 }
+
+
+func (repo *CoordinateRepository) GetCoordinatesByAlbumId(albumId int) ([]*domain.Coordinate, error) {
+	coordinates := []*domain.Coordinate{}
+	result := repo.SqlHandler.Conn.Where("album_id = ?", imagealbumIdId).Order("timestamp asc").Find(&coordinates)
+	if err := result.Error; err != nil {
+		return nil, err
+	}
+
+	return coordinates, nil
+}

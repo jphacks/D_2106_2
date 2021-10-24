@@ -39,7 +39,7 @@ func main() {
 
 	authHandler := handler.NewAuthHandler(userRepo)
 	userHandler := handler.NewUserHandler(userRepo)
-	albumHandler := handler.NewAlbumHandler(albumRepo, coordinateRepo)
+	albumHandler := handler.NewAlbumHandler(albumRepo, coordinateRepo, imageRepo)
 	imageHandler := handler.NewImageHandler(imageRepo)
 
 	// auth middleware

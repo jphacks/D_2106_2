@@ -36,6 +36,7 @@ jobs:
           echo "DB_HOST=$DB_HOST" >> .env
           echo "DB_NAME=$DB_NAME" >> .env
           echo "DB_PORT=$DB_PORT" >> .env
+          echo "DATA_API_HOSTNAME=flask_host" >> .env
           docker-compose up -d --remove-orphans
           sleep 60
           newman run ./collection.json -e ./environment.json

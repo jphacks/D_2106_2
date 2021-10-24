@@ -1,7 +1,6 @@
 package usecase
 
 import (
-	"fmt"
 	"mime/multipart"
 
 	"github.com/jphacks/D_2106_2/repository"
@@ -19,13 +18,13 @@ func (uc *ImageUsecase) UploadImages(albumId int, images []multipart.File, names
 		3. 画面と座標を紐付ける
 	*/
 
-	imageUrls, err := uc.S3service.S3Uploader(images, names)
-	if err != nil {
-		fmt.Println(err)
-	}
-	for _, url := range imageUrls {
-		fmt.Println(url)
-	}
+	// imageUrls, err := uc.S3service.S3Uploader(images, names)
+	// if err != nil {
+	// 	fmt.Println(err)
+	// }
+	// for _, url := range imageUrls {
+	// 	fmt.Println(url)
+	// }
 
 	return nil
 }

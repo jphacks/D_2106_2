@@ -45,10 +45,9 @@ func (repo *CoordinateRepository) GetCoordinateById(coordinateId int) (*domain.C
 	return coordinate, nil
 }
 
-
 func (repo *CoordinateRepository) GetCoordinatesByAlbumId(albumId int) ([]*domain.Coordinate, error) {
 	coordinates := []*domain.Coordinate{}
-	result := repo.SqlHandler.Conn.Where("album_id = ?", imagealbumIdId).Order("timestamp asc").Find(&coordinates)
+	result := repo.SqlHandler.Conn.Where("album_id = ?", albumId).Find(&coordinates)
 	if err := result.Error; err != nil {
 		return nil, err
 	}

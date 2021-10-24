@@ -36,6 +36,12 @@ func (handler *ImageHandler) UploadImages(c *gin.Context) {
 		}
 		images = append(images, image)
 		names = append(names, header.Filename)
+
+		// x, err := exif.Decode(image)
+		// if err != nil {
+		// 	fmt.Println(err)
+		// }
+		// fmt.Println(x)
 	}
 
 	albumIdStr := c.PostForm("album_id")

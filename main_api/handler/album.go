@@ -1,6 +1,7 @@
 package handler
 
 import (
+	"fmt"
 	"log"
 	"net/http"
 	"strconv"
@@ -46,6 +47,7 @@ func (handler *AlbumHandler) GetAllAlbums(c *gin.Context) {
 	if err != nil {
 		log.Print(err)
 		c.JSON(500, gin.H{"err": err.Error()})
+		return
 	}
 
 	c.JSON(http.StatusOK, gin.H{"data": albums})
@@ -58,6 +60,7 @@ func (handler *AlbumHandler) GetUserAlbums(c *gin.Context) {
 	if err != nil {
 		log.Print(err)
 		c.JSON(500, gin.H{"err": err.Error()})
+		return
 	}
 
 	c.JSON(http.StatusOK, gin.H{"data": albums})
@@ -75,10 +78,24 @@ func (handler *AlbumHandler) GetAlbumDetail(c *gin.Context) {
 	lon1, _ := strconv.ParseFloat(c.Query("lon1"), 64)
 	lat2, _ := strconv.ParseFloat(c.Query("lat2"), 64)
 	lon2, _ := strconv.ParseFloat(c.Query("lon2"), 64)
+	fmt.Println(albumId)
+	if albumId <= 0 {
+		c.JSON(400, gin.H{"err": "album_id is invalid"})
+		return
+	}
+	if (-90 > lat1) || (lat2 > 90) || (lat1 >= lat2) {
+		c.JSON(400, gin.H{"err": "latitude is really? -90 = lat = 90"})
+		return
+	}
+	if (-180 > lon1) || (lon2 > 180) || (lon1 >= lon2) {
+		c.JSON(400, gin.H{"err": "longitude is really? -180 = lat = 180"})
+		return
+	}
 	clusterData, err := handler.uc.ClusteringGpsPoint(albumId, lat1, lat2, lon1, lon2)
 	if err != nil {
 		log.Print(err)
 		c.JSON(500, gin.H{"err": err.Error()})
+		return
 	}
 
 	var tempCoordinates []domain.Coordinate
@@ -97,6 +114,7 @@ func (handler *AlbumHandler) GetAlbumDetail(c *gin.Context) {
 	if err != nil {
 		log.Print(err)
 		c.JSON(500, gin.H{"err": err.Error()})
+		return
 	}
 
 	c.JSON(http.StatusOK, gin.H{"data": *responseData})
@@ -108,12 +126,14 @@ func (handler *AlbumHandler) PostAlbum(c *gin.Context) {
 	if err != nil {
 		log.Print(err)
 		c.JSON(500, gin.H{"err": err.Error()})
+		return
 	}
 
 	albumId, err := handler.uc.CreateNewAlbum(req.Locations, req.UserId, req.Title, req.StartAt, req.EndAt, req.IsPublic)
 	if err != nil {
 		log.Print(err)
 		c.JSON(500, gin.H{"err": err.Error()})
+		return
 	}
 
 	res := &PostAlbumResponse{Id: albumId}

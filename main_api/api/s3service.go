@@ -26,7 +26,7 @@ func (client *S3service) S3Uploader(images []multipart.File, names []string) ([]
 				Bucket:      aws.String(client.BucketName),
 				Key:         aws.String("images/" + names[i]),
 				Body:        image,
-				ContentType: aws.String("image/png"),
+				ContentType: aws.String("image/jpeg"),
 			})
 			c <- res
 		}(i, image, c)

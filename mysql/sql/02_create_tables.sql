@@ -13,7 +13,8 @@ CREATE TABLE IF NOT EXISTS albums (
     title VARCHAR(128) NOT NULL,
     started_at TIMESTAMP NOT NULL,
     ended_at TIMESTAMP NOT NULL,
-    is_public BOOLEAN NOT NULL
+    is_public BOOLEAN NOT NULL,
+    thumbnail_image_id INT NOT NULL
 );
 
 CREATE TABLE IF NOT EXISTS images (
@@ -27,7 +28,9 @@ CREATE TABLE IF NOT EXISTS images (
 CREATE TABLE IF NOT EXISTS users (
     id INT AUTO_INCREMENT NOT NULL PRIMARY KEY,
     name VARCHAR(128),
-    password VARCHAR(128)
+    password VARCHAR(128),
+    profile_image_url VARCHAR(128),
+    introduction VARCHAR(128)
 );
 
 CREATE TABLE IF NOT EXISTS friends (

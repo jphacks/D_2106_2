@@ -7,6 +7,7 @@ import (
 	"log"
 	"net/http"
 
+	"github.com/jphacks/D_2106_2/config"
 	"github.com/jphacks/D_2106_2/domain"
 )
 
@@ -32,7 +33,8 @@ type ClusterData struct {
 }
 
 func GetSampleApi() GpsData {
-	resp, err := http.Get("http://flask_host:5000/api/get_sample")
+	hostname, _ := config.GetDataApiHostname()
+	resp, err := http.Get("http://" + hostname + ":5000/api/get_sample")
 	if err != nil {
 		log.Fatal(err)
 	}
@@ -61,13 +63,15 @@ func GetCheckClusteringApi() (*ClusterData, error) {
 }
 
 func GetClusteringApi(data GpsData) (*ClusterData, error) {
+	hostname, _ := config.GetDataApiHostname()
+
 	jsonData, err := json.Marshal(data)
 	if err != nil {
 		panic(err)
 	}
 	req, err := http.NewRequest(
 		"POST",
-		"http://flask_host:5000/api/clustering",
+		"http://"+hostname+":5000/api/clustering",
 		bytes.NewBuffer([]byte(string(jsonData))),
 	)
 	client := &http.Client{}

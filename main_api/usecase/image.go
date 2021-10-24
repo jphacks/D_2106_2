@@ -1,6 +1,7 @@
 package usecase
 
 import (
+	"fmt"
 	"mime/multipart"
 	"sort"
 	"strings"
@@ -78,18 +79,9 @@ func (uc *ImageUsecase) UploadImages(albumId int, images []multipart.File, names
 
 	}
 
-	// imageUrls, err := uc.S3service.S3Uploader(images, names)
-	// if err != nil {
-	// 	fmt.Println(err)
-	// }
-
-	//開発用
-	imageUrls := []string{
-		"https://aaa/1.jpeg",
-		"https://aaa/2.jpeg",
-		"https://aaa/3.jpeg",
-		"https://aaa/4.jpeg",
-		"https://aaa/5.jpeg",
+	imageUrls, err := uc.S3service.S3Uploader(images, names)
+	  if err != nil {
+		fmt.Println(err)
 	}
 
 	var dbInputs []*domain.Image

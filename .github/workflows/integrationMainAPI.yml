@@ -1,12 +1,8 @@
 name: Integration of Main API
 
 on:
-  push:
-    # branches: [main, develop]
-    - main
   pull_request:
-    - main
-    # branches: [main, develop]
+    branches: [main, develop]
 
 jobs:
   build:
@@ -23,9 +19,11 @@ jobs:
         run: |
           sudo npm install -g newman
           curl -H "X-Api-Key:$POSTMAN_API_KEY" https://api.getpostman.com/collections/$POSTMAN_COLLECTION_ID > collection.json
+          curl -H "X-Api-Key:$POSTMAN_API_KEY" https://api.getpostman.com/environments/$POSTMAN_ENVIRONMENT_ID > environment.json
         env:
           POSTMAN_API_KEY: ${{ secrets.POSTMAN_API_KEY }}
           POSTMAN_COLLECTION_ID: ${{ secrets.POSTMAN_COLLECTION_ID }}
+          POSTMAN_ENVIRONMENT_ID: ${{ secrets.POSTMAN_ENVIRONMENT_ID }}
         working-directory: ./main_api
 
       - name: E2E Test
@@ -36,9 +34,10 @@ jobs:
           echo "DB_HOST=$DB_HOST" >> .env
           echo "DB_NAME=$DB_NAME" >> .env
           echo "DB_PORT=$DB_PORT" >> .env
+          echo "DATA_API_HOSTNAME=flask_host" >> .env
           docker-compose up -d --remove-orphans
           sleep 60
-          newman run ./collection.json
+          newman run ./collection.json -e ./environment.json
         env:
           DB_USER: ${{ secrets.DB_USER }}
           DB_PASS: ${{ secrets.DB_PASS }}

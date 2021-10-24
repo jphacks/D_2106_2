@@ -1,6 +1,8 @@
 package usecase
 
 import (
+	"fmt"
+
 	"github.com/jphacks/D_2106_2/api"
 	"github.com/jphacks/D_2106_2/domain"
 	"github.com/jphacks/D_2106_2/repository"
@@ -107,11 +109,15 @@ func (uc *AlbumUsecase) ClusteringGpsPoint(
 		if err != nil {
 			return nil, err
 		}
-		if (latitudeMin < coordinate.Latitude) && (coordinate.Latitude < longitudeMax) {
+		if (latitudeMin < coordinate.Latitude) && (coordinate.Latitude < latitudeMax) {
 			if (longitudeMin < coordinate.Longitude) && (coordinate.Longitude < longitudeMax) {
+				fmt.Println(latitudeMin, coordinate.Latitude, latitudeMax)
 				used_coordinates = append(used_coordinates, *coordinate)
 			}
 		}
+	}
+	if len(used_coordinates) == 0 {
+		return nil, nil
 	}
 	gpsData := api.Coordinates2GpsData(used_coordinates)
 	clusterData, err := api.GetClusteringApi(gpsData)

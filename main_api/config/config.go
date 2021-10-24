@@ -55,3 +55,14 @@ func GetAwsConfig() (*AwsConfig, error) {
 
 	return config, nil
 }
+
+func GetDataApiHostname() (string, error) {
+	err := godotenv.Load(fmt.Sprintf("./%s.env", os.Getenv("GO_ENV")))
+	if err != nil {
+		fmt.Println(err)
+	}
+
+	hostname := os.Getenv("DATA_API_HOSTNAME")
+
+	return hostname, nil
+}

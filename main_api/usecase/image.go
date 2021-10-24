@@ -8,6 +8,7 @@ import (
 
 type ImageUsecase struct {
 	ImageRepo repository.ImageRepository
+	S3service repository.S3service
 }
 
 func (uc *ImageUsecase) UploadImages(albumId int, images []multipart.File, names []string) error {
@@ -17,12 +18,10 @@ func (uc *ImageUsecase) UploadImages(albumId int, images []multipart.File, names
 		3. 画面と座標を紐付ける
 	*/
 
-	// api.S3Uploader sample
-	// imageUrls, err := api.S3Uploader(images, names)
+	// imageUrls, err := uc.S3service.S3Uploader(images, names)
 	// if err != nil {
 	// 	fmt.Println(err)
 	// }
-
 	// for _, url := range imageUrls {
 	// 	fmt.Println(url)
 	// }

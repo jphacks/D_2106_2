@@ -3,9 +3,7 @@ name: Deploy DataAPI to Amazon ECS
 on:
   push:
     branches:
-      - master
-    paths:
-      - "./data_api/**"
+      - main
 
 env:
   AWS_REGION: ap-northeast-1

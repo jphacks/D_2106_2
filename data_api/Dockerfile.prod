@@ -12,5 +12,9 @@ RUN pip3 install numpy
 RUN pip3 install scikit-learn
 RUN pip3 install Flask
 RUN pip3 install flask-cors
+# RUN pip install waitress
 
+COPY ./flask_ml_server .
+
+# ENTRYPOINT [ "waitress-serve" "--port=5000" "server:app" ]
 CMD [ "python3", "run.py" ]

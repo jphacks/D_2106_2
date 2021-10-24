@@ -39,5 +39,5 @@ services:
     ports:
       - "5000:5000"
     volumes:
-      - ../data_api:/app
+      - ../data_api/flask_ml_server:/app
     tty: true

@@ -95,6 +95,14 @@ func (handler *AlbumHandler) GetAlbumDetail(c *gin.Context) {
 		c.JSON(500, gin.H{"err": err.Error()})
 		return
 	}
+	if clusterData == nil {
+		c.JSON(http.StatusOK, gin.H{"data": struct {
+			Location []string `json:"location"`
+		}{
+			Location: make([]string, 0),
+		}})
+		return
+	}
 
 	var tempCoordinates []domain.Coordinate
 	for _, data := range clusterData.ClusterData {

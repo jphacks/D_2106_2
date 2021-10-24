@@ -25,6 +25,7 @@ jobs:
         env:
           POSTMAN_API_KEY: ${{ secrets.POSTMAN_API_KEY }}
           POSTMAN_COLLECTION_ID: ${{ secrets.POSTMAN_COLLECTION_ID }}
+          POSTMAN_ENVIRONMENT_ID: ${{ secrets.POSTMAN_ENVIRONMENT_ID }}
         working-directory: ./main_api
 
       - name: E2E Test
@@ -37,7 +38,7 @@ jobs:
           echo "DB_PORT=$DB_PORT" >> .env
           docker-compose up -d --remove-orphans
           sleep 60
-          newman run ./collection.json -e environment.json
+          newman run ./collection.json -e ./environment.json
         env:
           DB_USER: ${{ secrets.DB_USER }}
           DB_PASS: ${{ secrets.DB_PASS }}

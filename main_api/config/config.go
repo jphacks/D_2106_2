@@ -62,5 +62,7 @@ func GetDataApiHostname() (string, error) {
 		fmt.Println(err)
 	}
 
-	return os.Getenv("DATA_API_HOSTNAME"), nil
+	hostname := os.Getenv("DATA_API_HOSTNAME")
+
+	return hostname, nil
 }

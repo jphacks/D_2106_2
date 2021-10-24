@@ -16,5 +16,7 @@ RUN pip3 install flask-cors
 
 COPY ./flask_ml_server .
 
+EXPOSE 5000
+
 # ENTRYPOINT [ "waitress-serve" "--port=5000" "server:app" ]
 CMD [ "python3", "run.py" ]

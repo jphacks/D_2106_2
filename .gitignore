@@ -3,6 +3,7 @@
 sample-curl.txt
 
 *png
+*jpeg
 
 tmp/
 __pycache__/

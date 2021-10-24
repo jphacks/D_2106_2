@@ -28,11 +28,6 @@ func main() {
 		// log.Fatal(err)
 		fmt.Println(err)
 	}
-	// db, err := sqlHandler.Conn.DB()
-	// if err != nil {
-	// 	fmt.Println(err)
-	// }
-	// defer db.Close()
 
 	r := gin.Default()
 
@@ -45,7 +40,7 @@ func main() {
 	authHandler := handler.NewAuthHandler(userRepo)
 	userHandler := handler.NewUserHandler(userRepo)
 	albumHandler := handler.NewAlbumHandler(albumRepo, coordinateRepo, imageRepo)
-	imageHandler := handler.NewImageHandler()
+	imageHandler := handler.NewImageHandler(imageRepo)
 
 	// auth middleware
 	authMiddleware, err := middleware.GetAuthMiddleware(*authHandler)

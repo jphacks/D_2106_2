@@ -23,12 +23,26 @@ func (repo *ImageRepository) GetImagesByAlbumId(albumId int) ([]*domain.Image, e
 	return images, nil
 }
 
+func (repo *ImageRepository) StoreImages(images []*domain.Image) ([]int, error) {
+	result := repo.SqlHandler.Conn.Create(&images)
+	if err := result.Error; err != nil {
+		return nil, err
+	}
+
+	var idList []int
+	for _, image := range images {
+		idList = append(idList, image.Id)
+	}
+
+	return idList, nil
+}
+
 func (repo *ImageRepository) GetImagesByCoordinateId(coordinateId int) ([]*domain.Image, error) {
 	images := []*domain.Image{}
 	result := repo.SqlHandler.Conn.Where("coordinate_id = ?", coordinateId).Find(&images)
 	if err := result.Error; err != nil {
 		return nil, err
 	}
-
+  
 	return images, nil
 }

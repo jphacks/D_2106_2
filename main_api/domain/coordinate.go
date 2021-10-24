@@ -6,6 +6,7 @@ type Coordinate struct {
 	Timestamp string
 	Latitude  float64
 	Longitude float64
+	IsShow bool
 }
 
 type Location struct {

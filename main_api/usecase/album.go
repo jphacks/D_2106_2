@@ -44,6 +44,7 @@ func (uc *AlbumUsecase) CreateNewAlbum(
 
 	/* TODO: implement create album */
 
+
 	albumId, err := uc.AlbumRepo.StoreAlbum(album)
 	if err != nil {
 		return -1, err
@@ -51,11 +52,16 @@ func (uc *AlbumUsecase) CreateNewAlbum(
 
 	coordinates := make([]*domain.Coordinate, len(locations))
 	for i, locate := range locations {
+		isShow := false
+		if i % 10 == 0 || i+1 == len(locations){
+			isShow = true
+		}
 		coordinates[i] = &domain.Coordinate{
 			AlbumId:   albumId,
 			Timestamp: locate.Timestamp,
 			Latitude:  locate.Latitude,
 			Longitude: locate.Longitude,
+			IsShow: isShow,
 		}
 	}
 

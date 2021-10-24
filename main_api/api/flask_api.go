@@ -7,6 +7,7 @@ import (
 	"log"
 	"net/http"
 
+	"github.com/jphacks/D_2106_2/config"
 	"github.com/jphacks/D_2106_2/domain"
 )
 
@@ -32,7 +33,8 @@ type ClusterData struct {
 }
 
 func GetSampleApi() GpsData {
-	resp, err := http.Get("http://flask_host:5000/api/get_sample")
+	hostname, _ := config.GetDataApiHostname()
+	resp, err := http.Get("http://" + hostname + ":5000/api/get_sample")
 	if err != nil {
 		log.Fatal(err)
 	}

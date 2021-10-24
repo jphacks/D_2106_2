@@ -13,7 +13,8 @@ CREATE TABLE IF NOT EXISTS albums (
     title VARCHAR(128) NOT NULL,
     started_at TIMESTAMP NOT NULL,
     ended_at TIMESTAMP NOT NULL,
-    is_public BOOLEAN NOT NULL
+    is_public BOOLEAN NOT NULL,
+    thumbnail_image_id INT NOT NULL
 );
 
 CREATE TABLE IF NOT EXISTS images (

@@ -2,5 +2,7 @@
 .env
 sample-curl.txt
 
+*png
+
 tmp/
 __pycache__/

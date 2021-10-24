@@ -26,7 +26,13 @@ func (handler *ImageHandler) UploadImages(c *gin.Context) {
 	var names []string
 	var err error
 
-	for i := 0; i < 5; i++ {
+	albumIdStr := c.PostForm("album_id")
+	albumId, _ := strconv.Atoi(albumIdStr)
+
+	imageNumStr := c.PostForm("image_num")
+	imageNum, _ := strconv.Atoi(imageNumStr)
+
+	for i := 0; i < imageNum; i++ {
 		filename := "image" + strconv.Itoa(i+1)
 		image, header, err := c.Request.FormFile(filename)
 		if err != nil {
@@ -43,9 +49,6 @@ func (handler *ImageHandler) UploadImages(c *gin.Context) {
 		// }
 		// fmt.Println(x)
 	}
-
-	albumIdStr := c.PostForm("album_id")
-	albumId, _ := strconv.Atoi(albumIdStr)
 
 	err = handler.uc.UploadImages(albumId, images, names)
 	if err != nil {

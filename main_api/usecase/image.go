@@ -9,6 +9,7 @@ import (
 type ImageUsecase struct {
 	ImageRepo repository.ImageRepository
 	CoordinateRepo repository.CoordinateRepository
+	S3service repository.S3service
 }
 
 func (uc *ImageUsecase) UploadImages(albumId int, images []multipart.File, names []string) error {
@@ -21,8 +22,17 @@ func (uc *ImageUsecase) UploadImages(albumId int, images []multipart.File, names
 
 	coordinates, err :=uc.CoordinateRepo.GetCoordinatesByAlbumId(albumId)
 	for image, _ := range images{
-
+		
 	}
+
+	// imageUrls, err := uc.S3service.S3Uploader(images, names)
+	// if err != nil {
+	// 	fmt.Println(err)
+	// }
+	// for _, url := range imageUrls {
+	// 	fmt.Println(url)
+	// }
+
 
 	return nil
 }

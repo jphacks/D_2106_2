@@ -29,8 +29,14 @@ type PostAlbumResponse struct {
 	Id int `json:"id"`
 }
 
-func NewAlbumHandler(albumRepo repository.AlbumRepository, coordinateRepo repository.CoordinateRepository) *AlbumHandler {
-	uc := usecase.AlbumUsecase{AlbumRepo: albumRepo, CoordinateRepo: coordinateRepo}
+// type TempLocation struct {
+// 	GpsId     int     `json:"id"`
+// 	Latitude  float64 `json:"latitude`
+// 	Longitude float64 `json:"longitude`
+// }
+
+func NewAlbumHandler(albumRepo repository.AlbumRepository, coordinateRepo repository.CoordinateRepository, imageRepo repository.ImageRepository) *AlbumHandler {
+	uc := usecase.AlbumUsecase{AlbumRepo: albumRepo, CoordinateRepo: coordinateRepo, ImageRepo: imageRepo}
 
 	return &AlbumHandler{uc: uc}
 }
@@ -69,8 +75,31 @@ func (handler *AlbumHandler) GetAlbumDetail(c *gin.Context) {
 	lon1, _ := strconv.ParseFloat(c.Query("lon1"), 64)
 	lat2, _ := strconv.ParseFloat(c.Query("lat2"), 64)
 	lon2, _ := strconv.ParseFloat(c.Query("lon2"), 64)
-	handler.uc.ClusteringGpsPoint(albumId, lat1, lat2, lon1, lon2)
-	c.JSON(http.StatusOK, gin.H{"data": "data"})
+	clusterData, err := handler.uc.ClusteringGpsPoint(albumId, lat1, lat2, lon1, lon2)
+	if err != nil {
+		log.Print(err)
+		c.JSON(500, gin.H{"err": err.Error()})
+	}
+
+	var tempCoordinates []domain.Coordinate
+	for _, data := range clusterData.ClusterData {
+		meanLatitude := data.MeanLatitude
+		meanLongitude := data.MeanLongitude
+		for _, gpsId := range data.GpsIdBelongsTo {
+			tempCoordinates = append(tempCoordinates, domain.Coordinate{
+				Id:        gpsId,
+				Latitude:  meanLatitude,
+				Longitude: meanLongitude,
+			})
+		}
+	}
+	responseData, err := handler.uc.ClusteringData2Response(&tempCoordinates)
+	if err != nil {
+		log.Print(err)
+		c.JSON(500, gin.H{"err": err.Error()})
+	}
+
+	c.JSON(http.StatusOK, gin.H{"data": *responseData})
 }
 
 func (handler *AlbumHandler) PostAlbum(c *gin.Context) {

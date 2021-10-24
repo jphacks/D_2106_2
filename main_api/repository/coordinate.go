@@ -6,4 +6,5 @@ type CoordinateRepository interface {
 	StoreCoordinates(coordinates []*domain.Coordinate) ([]int, error)
 	GetCoordinateByImageId(imageId int) (*domain.Coordinate, error)
 	GetCoordinatesByAlbumId(albumId int) ([]*domain.Coordinate, error)
+	GetCoordinateById(coordinateId int) (*domain.Coordinate, error)
 }

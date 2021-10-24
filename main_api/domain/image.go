@@ -5,5 +5,5 @@ type Image struct {
 	Url          string
 	AlbumId      int
 	CreatedAt    string
-	CorrdinateId int
+	CoordinateId int
 }

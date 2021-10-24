@@ -63,13 +63,15 @@ func GetCheckClusteringApi() (*ClusterData, error) {
 }
 
 func GetClusteringApi(data GpsData) (*ClusterData, error) {
+	hostname, _ := config.GetDataApiHostname()
+
 	jsonData, err := json.Marshal(data)
 	if err != nil {
 		panic(err)
 	}
 	req, err := http.NewRequest(
 		"POST",
-		"http://flask_host:5000/api/clustering",
+		"http://"+hostname+":5000/api/clustering",
 		bytes.NewBuffer([]byte(string(jsonData))),
 	)
 	client := &http.Client{}

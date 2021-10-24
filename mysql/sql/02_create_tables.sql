@@ -30,7 +30,7 @@ CREATE TABLE IF NOT EXISTS users (
     name VARCHAR(128),
     password VARCHAR(128),
     profile_image_url VARCHAR(128),
-    introduction VARCHAR(128),
+    introduction VARCHAR(128)
 );
 
 CREATE TABLE IF NOT EXISTS friends (

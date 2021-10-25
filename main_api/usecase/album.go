@@ -42,8 +42,6 @@ func (uc *AlbumUsecase) CreateNewAlbum(
 		IsPublic:  isPublic,
 	}
 
-	/* TODO: implement create album */
-
 	albumId, err := uc.AlbumRepo.StoreAlbum(album)
 	if err != nil {
 		return -1, err

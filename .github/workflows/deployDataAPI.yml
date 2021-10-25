@@ -77,3 +77,4 @@ jobs:
           SLACK_USERNAME: shinji
           SLACK_ICON: https://avatars.githubusercontent.com/u/46392441?v=4
           SLACK_COLOR: ${{ job.status }}
+          SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK }}

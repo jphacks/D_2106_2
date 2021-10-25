@@ -1,14 +1,29 @@
-name: Integration of Main API
+name: Test of Main API
 
 on:
+  push:
+    branches: [develop]
   pull_request:
-    branches: [main, develop]
+    branches: [develop, main]
 
 jobs:
   build:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
+
+      - name: Set up Go
+        uses: actions/setup-go@v2
+        with:
+          go-version: 1.16
+
+      - name: Build
+        run: go build -v ./...
+        working-directory: ./main_api
+
+      - name: Test
+        run: go test -v ./...
+        working-directory: ./main_api
 
       - name: Setup Node
         uses: actions/setup-node@v2
@@ -52,3 +67,11 @@ jobs:
           rm -f ./collection.json
           rm -f ./main_api/.env
         working-directory: ./main_api
+
+      - name: Slack Notification
+        uses: rtCamp/action-slack-notify@v2
+        env:
+          SLACK_USERNAME: shinji
+          SLACK_ICON: https://avatars.githubusercontent.com/u/46392441?v=4
+          SLACK_COLOR: ${{ job.status }}
+          SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK }}

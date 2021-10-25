@@ -1,7 +1,6 @@
 package api
 
 import (
-	"log"
 	"mime/multipart"
 
 	"github.com/aws/aws-sdk-go/aws"
@@ -13,38 +12,29 @@ type S3service struct {
 	S3Client
 }
 
-type UploadResult struct {
-	Output *s3manager.UploadOutput
-	Err    error
-}
-
 func NewS3service(client S3Client) repository.S3service {
 	return &S3service{client}
 }
 
 func (client *S3service) S3Uploader(images []multipart.File, names []string) ([]string, error) {
-	c := make(chan UploadResult)
+	c := make(chan *s3manager.UploadOutput)
 	imageUrls := make([]string, len(images))
 	for i, image := range images {
-		go func(i int, image multipart.File, c chan UploadResult) {
-			output, err := client.Uploader.Upload(&s3manager.UploadInput{
+		go func(i int, image multipart.File, c chan *s3manager.UploadOutput) {
+			res, _ := client.Uploader.Upload(&s3manager.UploadInput{
 				ACL:         aws.String("public-read"),
 				Bucket:      aws.String(client.BucketName),
 				Key:         aws.String("images/" + names[i]),
 				Body:        image,
 				ContentType: aws.String("image/jpeg"),
 			})
-			c <- UploadResult{Output: output, Err: err}
+			c <- res
 		}(i, image, c)
 	}
 
 	for range images {
 		result := <-c
-		if err := result.Err; err != nil {
-			log.Print(err)
-			return []string{}, nil
-		}
-		imageUrls = append(imageUrls, result.Output.Location)
+		imageUrls = append(imageUrls, result.Location)
 	}
 
 	return imageUrls, nil

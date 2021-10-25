@@ -70,3 +70,10 @@ jobs:
           service: ${{ env.ECS_SERVICE }}
           cluster: ${{ env.ECS_CLUSTER }}
           wait-for-service-stability: true
+
+      - name: Slack Notification
+        uses: rtCamp/action-slack-notify@v2
+        env:
+          SLACK_USERNAME: shinji
+          SLACK_ICON: https://avatars.githubusercontent.com/u/46392441?v=4
+          SLACK_COLOR: ${{ job.status }}

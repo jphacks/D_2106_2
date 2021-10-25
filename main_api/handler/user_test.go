@@ -48,7 +48,7 @@ func GetDummyAuthMiddleware() *jwt.GinJWTMiddleware {
 	return authMiddleware
 }
 
-func TestRegisterUser(t *testing.T) {
+func _TestRegisterUser(t *testing.T) {
 	tests := []struct {
 		name           string
 		userReq        RegisteruserReq
@@ -140,7 +140,7 @@ func TestRegisterUser(t *testing.T) {
 	}
 }
 
-func TestGetAllUsers(t *testing.T) {
+func _TestGetAllUsers(t *testing.T) {
 	tests := []struct {
 		name            string
 		fakeGetAllUsers func() ([]*domain.User, error)
@@ -221,7 +221,7 @@ func TestGetAllUsers(t *testing.T) {
 	}
 }
 
-func TestGetUser(t *testing.T) {
+func _TestGetUser(t *testing.T) {
 	tests := []struct {
 		name        string
 		fakeGetUser func(userId int) (*domain.User, error)

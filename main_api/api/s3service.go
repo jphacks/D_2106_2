@@ -23,6 +23,10 @@ func NewS3service(client S3Client) repository.S3service {
 }
 
 func (client *S3service) S3Uploader(images []multipart.File, names []string) ([]string, error) {
+	if client.Uploader == nil {
+		return names, nil
+	}
+
 	c := make(chan UploadResult)
 	imageUrls := make([]string, len(images))
 	for i, image := range images {

@@ -18,6 +18,9 @@ func NewS3client() (*S3Client, error) {
 	if err != nil {
 		return nil, err
 	}
+	if config.ACCESS_KEY == "" {
+		return &S3Client{BucketName: "", Uploader: nil}, nil
+	}
 
 	sess := session.Must(session.NewSession(&aws.Config{
 		Credentials: credentials.NewStaticCredentials(

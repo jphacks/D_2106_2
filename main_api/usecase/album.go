@@ -15,15 +15,15 @@ type AlbumUsecase struct {
 }
 
 type ResponseLocation struct {
-	Id        int
-	Timestamp string
-	Latitude  float64
-	Longitude float64
-	ImageUrls []string
+	Id        int      `json:"id"`
+	Timestamp string   `json:"timestamp"`
+	Latitude  float64  `json:"latitude"`
+	Longitude float64  `json:"longitude"`
+	ImageUrls []string `json:"imageUrls"`
 }
 
 type ResponseLocationData struct {
-	Location []ResponseLocation
+	Location []ResponseLocation `json:"location"`
 }
 
 func (uc *AlbumUsecase) CreateNewAlbum(

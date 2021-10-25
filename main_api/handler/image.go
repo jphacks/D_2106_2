@@ -27,18 +27,20 @@ func (handler *ImageHandler) UploadImages(c *gin.Context) {
 	var err error
 
 	albumIdStr, ok := c.GetPostForm("album_id")
-	if !ok {
+	if !ok || albumIdStr == "" {
 		message := "`album_id` field not found"
 		log.Print(message)
 		c.JSON(400, gin.H{"err": message})
+		return
 	}
 	albumId, _ := strconv.Atoi(albumIdStr)
 
 	imageNumStr := c.PostForm("image_num")
-	if !ok {
+	if !ok || imageNumStr == "" {
 		message := "`image_num` field not found"
 		log.Print(message)
 		c.JSON(400, gin.H{"err": message})
+		return
 	}
 	imageNum, _ := strconv.Atoi(imageNumStr)
 
@@ -60,6 +62,7 @@ func (handler *ImageHandler) UploadImages(c *gin.Context) {
 	if err != nil {
 		log.Print(err)
 		c.JSON(500, gin.H{"err": err.Error()})
+		return
 	}
 
 	c.JSON(http.StatusOK, gin.H{"data": "data"})

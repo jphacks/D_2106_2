@@ -1,10 +1,12 @@
 package handler
 
 import (
+	"fmt"
 	"log"
 	"mime/multipart"
 	"net/http"
 	"strconv"
+	"strings"
 
 	"github.com/gin-gonic/gin"
 	"github.com/jphacks/D_2106_2/repository"
@@ -57,13 +59,13 @@ func (handler *ImageHandler) UploadImages(c *gin.Context) {
 			return
 		}
 
-		if !validateImageName(header.Filename) {
+		if !validateImageName(strings.Split(header.Filename, ".")[0]) {
 			errorHandler(c, http.StatusBadRequest, "invalid file name")
 			return
 		}
 
 		images = append(images, image)
-		names = append(names, header.Filename)
+		names = append(names, fmt.Sprintf("%s-%s", albumIdStr, header.Filename))
 
 		log.Printf("Uploade %s, Size: %d", header.Filename, header.Size)
 	}

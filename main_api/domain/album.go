@@ -7,5 +7,5 @@ type Album struct {
 	StartedAt        string
 	EndedAt          string
 	IsPublic         bool
-	ThumbnailImageId string
+	ThumbnailImageId int
 }

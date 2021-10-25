@@ -1,13 +1,11 @@
 package usecase
 
 import (
-	"fmt"
 	"mime/multipart"
 	"sort"
+	"strconv"
 	"strings"
 	"time"
-
-	exif "github.com/rwcarlsen/goexif/exif"
 
 	"github.com/jphacks/D_2106_2/domain"
 	"github.com/jphacks/D_2106_2/repository"
@@ -31,22 +29,15 @@ func (uc *ImageUsecase) UploadImages(albumId int, images []multipart.File, names
 	var imageProps []*ImageProp
 
 	coordinates, _ := uc.CoordinateRepo.GetCoordinatesByAlbumId(albumId)
-	for i, image := range images {
 
-		x, err := exif.Decode(image)
-		if err != nil {
-			return err
-		}
-
-		exifTime, err := x.DateTime()
-		if err != nil {
-			return err
-		}
+	for _, name := range names {
+		unixtimeStr := strings.Split(name, ".")[0]
+		unixtime, _ := strconv.Atoi(unixtimeStr)
 
 		imageProps = append(imageProps,
 			&ImageProp{
-				Name:      names[i],
-				CreatedAt: time.Time(exifTime),
+				Name:      name,
+				CreatedAt: time.Unix(int64(unixtime), 0),
 			})
 	}
 
@@ -80,8 +71,8 @@ func (uc *ImageUsecase) UploadImages(albumId int, images []multipart.File, names
 	}
 
 	imageUrls, err := uc.S3service.S3Uploader(images, names)
-	  if err != nil {
-		fmt.Println(err)
+	if err != nil {
+		return err
 	}
 
 	var dbInputs []*domain.Image
@@ -94,7 +85,7 @@ func (uc *ImageUsecase) UploadImages(albumId int, images []multipart.File, names
 					&domain.Image{
 						Url:          url,
 						AlbumId:      albumId,
-						CreatedAt:    utils.TimeToString(image.CreatedAt),
+						CreatedAt:    image.CreatedAt,
 						CoordinateId: image.CoordinateId,
 					})
 			}

@@ -1,9 +1,11 @@
 package domain
 
+import "time"
+
 type Image struct {
 	Id           int
 	Url          string
 	AlbumId      int
-	CreatedAt    string
+	CreatedAt    time.Time
 	CoordinateId int
 }

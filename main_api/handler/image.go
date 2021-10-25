@@ -60,6 +60,7 @@ func (handler *ImageHandler) UploadImages(c *gin.Context) {
 	if err != nil {
 		log.Print(err)
 		c.JSON(500, gin.H{"err": err.Error()})
+		return
 	}
 
 	c.JSON(http.StatusOK, gin.H{"data": "data"})

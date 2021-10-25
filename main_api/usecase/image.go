@@ -46,7 +46,7 @@ func (uc *ImageUsecase) UploadImages(albumId int, images []multipart.File, names
 		imageProps = append(imageProps,
 			&ImageProp{
 				Name:      names[i],
-				CreatedAt: exifTime,
+				CreatedAt: time.Time(exifTime),
 			})
 	}
 
@@ -100,8 +100,7 @@ func (uc *ImageUsecase) UploadImages(albumId int, images []multipart.File, names
 			}
 		}
 	}
-	_, err := uc.ImageRepo.StoreImages(dbInputs)
-
+	_, err = uc.ImageRepo.StoreImages(dbInputs)
 	if err != nil {
 		return err
 	}

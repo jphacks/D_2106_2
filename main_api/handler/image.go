@@ -15,8 +15,8 @@ type ImageHandler struct {
 	uc usecase.ImageUsecase
 }
 
-func NewImageHandler(imageRepo repository.ImageRepository, s3service repository.S3service, coordinateRepo repository.CoordinateRepository) *ImageHandler {
-	uc := usecase.ImageUsecase{ImageRepo: imageRepo, S3service: s3service, CoordinateRepo: coordinateRepo}
+func NewImageHandler(imageRepo repository.ImageRepository, s3service repository.S3service) *ImageHandler {
+	uc := usecase.ImageUsecase{ImageRepo: imageRepo, S3service: s3service}
 
 	return &ImageHandler{uc: uc}
 }
@@ -26,10 +26,20 @@ func (handler *ImageHandler) UploadImages(c *gin.Context) {
 	var names []string
 	var err error
 
-	albumIdStr := c.PostForm("album_id")
+	albumIdStr, ok := c.GetPostForm("album_id")
+	if !ok {
+		message := "`album_id` field not found"
+		log.Print(message)
+		c.JSON(400, gin.H{"err": message})
+	}
 	albumId, _ := strconv.Atoi(albumIdStr)
 
 	imageNumStr := c.PostForm("image_num")
+	if !ok {
+		message := "`image_num` field not found"
+		log.Print(message)
+		c.JSON(400, gin.H{"err": message})
+	}
 	imageNum, _ := strconv.Atoi(imageNumStr)
 
 	for i := 0; i < imageNum; i++ {
@@ -43,11 +53,7 @@ func (handler *ImageHandler) UploadImages(c *gin.Context) {
 		images = append(images, image)
 		names = append(names, header.Filename)
 
-		// x, err := exif.Decode(image)
-		// if err != nil {
-		// 	fmt.Println(err)
-		// }
-		// fmt.Println(x)
+		log.Printf("Uploade %s, Size: %d", header.Filename, header.Size)
 	}
 
 	err = handler.uc.UploadImages(albumId, images, names)

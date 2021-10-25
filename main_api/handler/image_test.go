@@ -89,6 +89,44 @@ func TestUploadImages(t *testing.T) {
 			code: http.StatusBadRequest,
 			err:  true,
 		},
+		{
+			name: "invalid album_id",
+			textForm: UploadImageForm{
+				AlbumId:  "album_id",
+				ImageNum: "0",
+			},
+			fakeStoreImages: func(images []*domain.Image) ([]int, error) {
+				return nil, nil
+			},
+			fakeGetCoordinatesByAlbumId: func(albumId int) ([]*domain.Coordinate, error) {
+				return nil, nil
+			},
+			fakeS3Uploader: func(images []multipart.File, names []string) ([]string, error) {
+				return nil, nil
+			},
+			want: gin.H{"err": "`album_id` is invalid value"},
+			code: http.StatusBadRequest,
+			err:  true,
+		},
+		{
+			name: "invalid image_num",
+			textForm: UploadImageForm{
+				AlbumId:  "1",
+				ImageNum: "image_num",
+			},
+			fakeStoreImages: func(images []*domain.Image) ([]int, error) {
+				return nil, nil
+			},
+			fakeGetCoordinatesByAlbumId: func(albumId int) ([]*domain.Coordinate, error) {
+				return nil, nil
+			},
+			fakeS3Uploader: func(images []multipart.File, names []string) ([]string, error) {
+				return nil, nil
+			},
+			want: gin.H{"err": "`image_num` is invalid value"},
+			code: http.StatusBadRequest,
+			err:  true,
+		},
 	}
 
 	for _, tt := range tests {

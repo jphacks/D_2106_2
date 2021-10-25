@@ -25,6 +25,7 @@ type ImageProp struct {
 }
 
 func (uc *ImageUsecase) UploadImages(albumId int, images []multipart.File, names []string) error {
+	// FIXME: 画像のファイル名は album_id + unixtimeで保存する
 
 	var imageProps []*ImageProp
 

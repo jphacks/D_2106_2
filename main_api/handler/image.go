@@ -52,6 +52,8 @@ func (handler *ImageHandler) UploadImages(c *gin.Context) {
 		}
 		images = append(images, image)
 		names = append(names, header.Filename)
+
+		log.Printf("Uploade %s, Size: %d", header.Filename, header.Size)
 	}
 
 	err = handler.uc.UploadImages(albumId, images, names)

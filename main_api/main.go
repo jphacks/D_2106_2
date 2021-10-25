@@ -47,7 +47,7 @@ func main() {
 	authHandler := handler.NewAuthHandler(userRepo)
 	userHandler := handler.NewUserHandler(userRepo)
 	albumHandler := handler.NewAlbumHandler(albumRepo, coordinateRepo, imageRepo)
-	imageHandler := handler.NewImageHandler(imageRepo, s3service)
+	imageHandler := handler.NewImageHandler(imageRepo, s3service, coordinateRepo)
 
 	// auth middleware
 	authMiddleware, err := middleware.GetAuthMiddleware(*authHandler)

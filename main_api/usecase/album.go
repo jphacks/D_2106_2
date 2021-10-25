@@ -33,13 +33,15 @@ func (uc *AlbumUsecase) CreateNewAlbum(
 	startAt string,
 	endedAt string,
 	isPublic bool,
+	thumbnailImageId int,
 ) (int, error) {
 	album := &domain.Album{
-		UserId:    userId,
-		Title:     title,
-		StartedAt: startAt,
-		EndedAt:   endedAt,
-		IsPublic:  isPublic,
+		UserId:           userId,
+		Title:            title,
+		StartedAt:        startAt,
+		EndedAt:          endedAt,
+		IsPublic:         isPublic,
+		ThumbnailImageId: thumbnailImageId,
 	}
 
 	albumId, err := uc.AlbumRepo.StoreAlbum(album)

@@ -25,7 +25,6 @@ type ImageProp struct {
 }
 
 func (uc *ImageUsecase) UploadImages(albumId int, images []multipart.File, names []string) error {
-
 	var imageProps []*ImageProp
 
 	coordinates, _ := uc.CoordinateRepo.GetCoordinatesByAlbumId(albumId)

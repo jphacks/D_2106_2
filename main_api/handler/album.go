@@ -46,7 +46,7 @@ func (handler *AlbumHandler) GetAllAlbums(c *gin.Context) {
 	albums, err := handler.uc.GetAllAlbums()
 	if err != nil {
 		log.Print(err)
-		c.JSON(500, gin.H{"err": err.Error()})
+		c.JSON(500, gin.H{"error": err.Error()})
 		return
 	}
 
@@ -59,7 +59,7 @@ func (handler *AlbumHandler) GetUserAlbums(c *gin.Context) {
 	albums, err := handler.uc.GetUserAlbums(userId)
 	if err != nil {
 		log.Print(err)
-		c.JSON(500, gin.H{"err": err.Error()})
+		c.JSON(500, gin.H{"error": err.Error()})
 		return
 	}
 
@@ -79,21 +79,21 @@ func (handler *AlbumHandler) GetAlbumDetail(c *gin.Context) {
 	lat2, _ := strconv.ParseFloat(c.Query("lat2"), 64)
 	lon2, _ := strconv.ParseFloat(c.Query("lon2"), 64)
 	if albumId <= 0 {
-		c.JSON(400, gin.H{"err": "album_id is invalid"})
+		c.JSON(400, gin.H{"error": "album_id is invalid"})
 		return
 	}
 	if (-90 > lat1) || (lat2 > 90) || (lat1 >= lat2) {
-		c.JSON(400, gin.H{"err": "latitude is really? -90 = lat = 90"})
+		c.JSON(400, gin.H{"error": "latitude is really? -90 = lat = 90"})
 		return
 	}
 	if (-180 > lon1) || (lon2 > 180) || (lon1 >= lon2) {
-		c.JSON(400, gin.H{"err": "longitude is really? -180 = lat = 180"})
+		c.JSON(400, gin.H{"error": "longitude is really? -180 = lat = 180"})
 		return
 	}
 	clusterData, err := handler.uc.ClusteringGpsPoint(albumId, lat1, lat2, lon1, lon2)
 	if err != nil {
 		log.Print(err)
-		c.JSON(500, gin.H{"err": err.Error()})
+		c.JSON(500, gin.H{"error": err.Error()})
 		return
 	}
 	if clusterData == nil {
@@ -120,7 +120,7 @@ func (handler *AlbumHandler) GetAlbumDetail(c *gin.Context) {
 	responseData, err := handler.uc.ClusteringData2Response(&tempCoordinates)
 	if err != nil {
 		log.Print(err)
-		c.JSON(500, gin.H{"err": err.Error()})
+		c.JSON(500, gin.H{"error": err.Error()})
 		return
 	}
 
@@ -132,7 +132,7 @@ func (handler *AlbumHandler) PostAlbum(c *gin.Context) {
 	err := c.ShouldBindJSON(&req)
 	if err != nil {
 		log.Print(err)
-		c.JSON(500, gin.H{"err": err.Error()})
+		c.JSON(500, gin.H{"error": err.Error()})
 		return
 	}
 
@@ -147,7 +147,7 @@ func (handler *AlbumHandler) PostAlbum(c *gin.Context) {
 	)
 	if err != nil {
 		log.Print(err)
-		c.JSON(500, gin.H{"err": err.Error()})
+		c.JSON(500, gin.H{"error": err.Error()})
 		return
 	}
 

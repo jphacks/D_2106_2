@@ -55,7 +55,7 @@ func (handler *ImageHandler) UploadImages(c *gin.Context) {
 		image, header, err := c.Request.FormFile(filename)
 		if err != nil {
 			log.Print(err)
-			c.JSON(500, gin.H{"err": err.Error()})
+			c.JSON(500, gin.H{"error": err.Error()})
 			return
 		}
 
@@ -73,7 +73,7 @@ func (handler *ImageHandler) UploadImages(c *gin.Context) {
 	err = handler.uc.UploadImages(albumId, images, names)
 	if err != nil {
 		log.Print(err)
-		c.JSON(500, gin.H{"err": err.Error()})
+		c.JSON(500, gin.H{"error": err.Error()})
 		return
 	}
 
@@ -91,5 +91,5 @@ func validateImageName(nameString string) bool {
 
 func errorHandler(c *gin.Context, code int, message string) {
 	log.Print(message)
-	c.JSON(code, gin.H{"err": message})
+	c.JSON(code, gin.H{"error": message})
 }

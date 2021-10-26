@@ -66,7 +66,7 @@ func TestUploadImages(t *testing.T) {
 			fakeS3Uploader: func(images []multipart.File, names []string) ([]string, error) {
 				return nil, nil
 			},
-			want: gin.H{"err": "`album_id` field not found"},
+			want: gin.H{"error": "`album_id` field not found"},
 			code: http.StatusBadRequest,
 			err:  true,
 		},
@@ -85,7 +85,7 @@ func TestUploadImages(t *testing.T) {
 			fakeS3Uploader: func(images []multipart.File, names []string) ([]string, error) {
 				return nil, nil
 			},
-			want: gin.H{"err": "`image_num` field not found"},
+			want: gin.H{"error": "`image_num` field not found"},
 			code: http.StatusBadRequest,
 			err:  true,
 		},
@@ -104,7 +104,7 @@ func TestUploadImages(t *testing.T) {
 			fakeS3Uploader: func(images []multipart.File, names []string) ([]string, error) {
 				return nil, nil
 			},
-			want: gin.H{"err": "`album_id` is invalid value"},
+			want: gin.H{"error": "`album_id` is invalid value"},
 			code: http.StatusBadRequest,
 			err:  true,
 		},
@@ -123,7 +123,7 @@ func TestUploadImages(t *testing.T) {
 			fakeS3Uploader: func(images []multipart.File, names []string) ([]string, error) {
 				return nil, nil
 			},
-			want: gin.H{"err": "`image_num` is invalid value"},
+			want: gin.H{"error": "`image_num` is invalid value"},
 			code: http.StatusBadRequest,
 			err:  true,
 		},
@@ -166,7 +166,7 @@ func TestUploadImages(t *testing.T) {
 
 			assert.Equal(t, tt.code, response.Code)
 			if tt.err {
-				assert.Equal(t, tt.want["err"], responseBody["err"])
+				assert.Equal(t, tt.want["error"], responseBody["error"])
 			} else {
 				assert.Equal(t, tt.want["data"], responseBody["data"])
 			}

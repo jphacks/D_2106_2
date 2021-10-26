@@ -68,10 +68,22 @@ jobs:
           rm -f ./main_api/.env
         working-directory: ./main_api
 
-      - name: Slack Notification
+      - name: Slack Notification on Success
+        if: ${{ success() }}
         uses: rtCamp/action-slack-notify@v2
         env:
           SLACK_USERNAME: shinji
+          SLACK_TITLE: Success
+          SLACK_ICON: https://avatars.githubusercontent.com/u/46392441?v=4
+          SLACK_COLOR: ${{ job.status }}
+          SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK }}
+
+      - name: Slack Notification on Failure
+        if: ${{ failure() }}
+        uses: rtCamp/action-slack-notify@v2
+        env:
+          SLACK_USERNAME: shinji
+          SLACK_TITLE: Failure
           SLACK_ICON: https://avatars.githubusercontent.com/u/46392441?v=4
           SLACK_COLOR: ${{ job.status }}
           SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK }}

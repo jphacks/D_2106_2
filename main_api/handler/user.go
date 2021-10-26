@@ -17,7 +17,7 @@ type UserHandler struct {
 
 type RegisterUserRequest struct {
 	Username     string `json:"username"`
-	DeviceId     string `json:"device_id"`
+	DeviceId     string `json:"deviceId"`
 	Introduction string `json:"introduction"`
 }
 

@@ -5,7 +5,6 @@ import (
 	"log"
 	"net/http"
 
-	jwt "github.com/appleboy/gin-jwt/v2"
 	"github.com/jphacks/D_2106_2/repository"
 	"github.com/jphacks/D_2106_2/usecase"
 
@@ -22,7 +21,7 @@ type RegisterUserRequest struct {
 	Introduction string `json:"introduction"`
 }
 
-type RegisteUserRespose struct {
+type RegisterUserRespose struct {
 	UserId int `json:"user_id"`
 }
 
@@ -32,7 +31,7 @@ func NewUserHandler(userRepo repository.UserRepository) *UserHandler {
 	return &UserHandler{uc: uc}
 }
 
-func (handler *UserHandler) RegisterUser(c *gin.Context, authMiddleware *jwt.GinJWTMiddleware) {
+func (handler *UserHandler) RegisterUser(c *gin.Context) {
 	req := RegisterUserRequest{}
 	err := c.ShouldBindJSON(&req)
 	if err != nil {
@@ -61,7 +60,7 @@ func (handler *UserHandler) RegisterUser(c *gin.Context, authMiddleware *jwt.Gin
 		return
 	}
 
-	response := &RegisteUserRespose{UserId: userId}
+	response := &RegisterUserRespose{UserId: userId}
 
 	c.JSON(http.StatusOK, gin.H{"data": response})
 }

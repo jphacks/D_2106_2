@@ -2,8 +2,8 @@ package domain
 
 type User struct {
 	Id              int
+	DeviceId        string
 	Name            string
-	Password        string
 	ProfileImageUrl string
 	Introduction    string
 }

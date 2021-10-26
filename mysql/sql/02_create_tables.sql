@@ -27,8 +27,8 @@ CREATE TABLE IF NOT EXISTS images (
 
 CREATE TABLE IF NOT EXISTS users (
     id INT AUTO_INCREMENT NOT NULL PRIMARY KEY,
+    device_id VARCHAR(256),
     name VARCHAR(128),
-    password VARCHAR(128),
     profile_image_url VARCHAR(128),
     introduction VARCHAR(128)
 );

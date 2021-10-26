@@ -42,19 +42,9 @@ func (repo *UserRepository) GetUserById(userId int) (*domain.User, error) {
 	return user, nil
 }
 
-func (repo *UserRepository) GetUserByName(name string) (*domain.User, error) {
+func (repo *UserRepository) GetUserByDeviceId(device_id string) (*domain.User, error) {
 	user := &domain.User{}
-	result := repo.SqlHandler.Conn.Where("name = ?", name).First(&user)
-	if err := result.Error; err != nil {
-		return nil, err
-	}
-
-	return user, nil
-}
-
-func (repo *UserRepository) GetUserByNameAndPasssword(name string, password string) (*domain.User, error) {
-	user := &domain.User{}
-	result := repo.SqlHandler.Conn.Where("name = ? and password = ?", name, password).First(&user)
+	result := repo.SqlHandler.Conn.Where("device_id = ?", device_id).First(&user)
 	if err := result.Error; err != nil {
 		return nil, err
 	}

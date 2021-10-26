@@ -9,10 +9,15 @@ type UserUsecase struct {
 	UserRepo repository.UserRepository
 }
 
-func (uc *UserUsecase) RegisterNewUser(userName string, password string) (int, error) {
+func (uc *UserUsecase) RegisterNewUser(
+	userName string,
+	deviceId string,
+	introduction string,
+) (int, error) {
 	user := &domain.User{
-		Name:     userName,
-		Password: password,
+		Name:         userName,
+		DeviceId:     deviceId,
+		Introduction: introduction,
 	}
 
 	userId, err := uc.UserRepo.CreateUser(user)
@@ -30,26 +35,11 @@ func (uc *UserUsecase) GetAllUsers() ([]*domain.User, error) {
 	return users, nil
 }
 
-func (uc *UserUsecase) GetUserById(userId int) (*domain.User, error) {
-	user, err := uc.UserRepo.GetUserById(userId)
+func (uc *UserUsecase) GetUserByDeviceId(device_id string) (*domain.User, error) {
+	user, err := uc.UserRepo.GetUserByDeviceId(device_id)
 	if err != nil {
 		return nil, err
 	}
-	return user, nil
-}
 
-func (uc *UserUsecase) CheckUserExist(username string) (bool, error) {
-	_, err := uc.UserRepo.GetUserByName(username)
-	if err != nil {
-		return false, err
-	}
-	return true, nil
-}
-
-func (uc *UserUsecase) Login(name string, password string) (*domain.User, error) {
-	user, err := uc.UserRepo.GetUserByNameAndPasssword(name, password)
-	if err != nil {
-		return nil, err
-	}
 	return user, nil
 }

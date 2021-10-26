@@ -9,7 +9,6 @@ import (
 	"github.com/jphacks/D_2106_2/config"
 	"github.com/jphacks/D_2106_2/database"
 	"github.com/jphacks/D_2106_2/handler"
-	"github.com/jphacks/D_2106_2/middleware"
 
 	"github.com/gin-contrib/cors"
 	"github.com/gin-gonic/gin"
@@ -44,16 +43,9 @@ func main() {
 	imageRepo := database.NewImageRepository(*sqlHandler)
 	s3service := api.NewS3service(*s3client)
 
-	authHandler := handler.NewAuthHandler(userRepo)
 	userHandler := handler.NewUserHandler(userRepo)
 	albumHandler := handler.NewAlbumHandler(albumRepo, coordinateRepo, imageRepo)
 	imageHandler := handler.NewImageHandler(imageRepo, s3service, coordinateRepo)
-
-	// auth middleware
-	authMiddleware, err := middleware.GetAuthMiddleware(*authHandler)
-	if err != nil {
-		fmt.Println(err)
-	}
 
 	// routing
 	r.Use(cors.Default()) // cors
@@ -85,17 +77,8 @@ func main() {
 
 	r.POST("/upload/image", func(c *gin.Context) { imageHandler.UploadImages(c) })
 
-	r.POST("/register", func(c *gin.Context) { userHandler.RegisterUser(c, authMiddleware) })
-	r.POST("/login", authMiddleware.LoginHandler)
-
-	auth := r.Group("/auth")
-	// Refresh time can be longer than token timeout
-	auth.GET("/refresh_token", authMiddleware.RefreshHandler)
-	auth.Use(authMiddleware.MiddlewareFunc())
-	{
-		auth.GET("/users", func(c *gin.Context) { userHandler.GetAllUsers(c) })
-		auth.GET("/user", func(c *gin.Context) { userHandler.GetUser(c) })
-	}
+	r.POST("/user", func(c *gin.Context) { userHandler.RegisterUser(c) })
+	r.GET("/user", func(c *gin.Context) { userHandler.GetUser(c) })
 
 	// 404
 	r.NoRoute(func(c *gin.Context) {

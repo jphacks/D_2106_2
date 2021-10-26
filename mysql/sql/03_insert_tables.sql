@@ -58,8 +58,8 @@ INSERT INTO images (url, album_id, created_at, coordinate_id) VALUES ("https://i
 INSERT INTO images (url, album_id, created_at, coordinate_id) VALUES ("https://i.ytimg.com/vi/gF4m7sCQ-4c/maxresdefault.jpg", 2, '2021-10-24 13:35:35.000000', 24);
 
 -- users
-INSERT INTO users (name, password, profile_image_url, introduction) VALUES ('Bob', 'pass', 'https://pbs.twimg.com/media/Cw5hdTBUUAAWuIo.jpg', 'I am fine very very much');
-INSERT INTO users (name, password, profile_image_url, introduction) VALUES ('Tom', 'pass', 'https://i.ytimg.com/vi/gF4m7sCQ-4c/maxresdefault.jpg', 'I want to go to zoo');
+INSERT INTO users (name, device_id, profile_image_url, introduction) VALUES ('Bob', 'dummy_device_id_1', 'https://pbs.twimg.com/media/Cw5hdTBUUAAWuIo.jpg', 'I am fine very very much');
+INSERT INTO users (name, device_id, profile_image_url, introduction) VALUES ('Tom', 'dummy_device_id_2', 'https://i.ytimg.com/vi/gF4m7sCQ-4c/maxresdefault.jpg', 'I want to go to zoo');
 
 -- friends
 INSERT INTO friends (user_id, follow_user_id) VALUES (1, 2);

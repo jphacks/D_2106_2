@@ -1,16 +1,20 @@
 package domain
 
+import (
+	"time"
+)
+
 type Coordinate struct {
 	Id        int
 	AlbumId   int
-	Timestamp string
+	Timestamp time.Time
 	Latitude  float64
 	Longitude float64
-	IsShow bool
+	IsShow    bool
 }
 
 type Location struct {
 	Latitude  float64
 	Longitude float64
-	Timestamp string
+	Timestamp int64
 }

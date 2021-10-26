@@ -15,3 +15,7 @@ func TimeToString(t time.Time) string {
 	str := t.Format(layout)
 	return str
 }
+
+func UnixToTime(t int64) time.Time {
+	return time.Unix(t, 0)
+}

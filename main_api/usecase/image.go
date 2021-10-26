@@ -9,7 +9,6 @@ import (
 
 	"github.com/jphacks/D_2106_2/domain"
 	"github.com/jphacks/D_2106_2/repository"
-	"github.com/jphacks/D_2106_2/utils"
 )
 
 type ImageUsecase struct {
@@ -45,19 +44,17 @@ func (uc *ImageUsecase) UploadImages(albumId int, images []multipart.File, names
 	})
 
 	sort.Slice(coordinates, func(i, j int) bool {
-		return utils.StringToTime(coordinates[i].Timestamp).Before(utils.StringToTime(coordinates[j].Timestamp))
+		return coordinates[i].Timestamp.Before(coordinates[j].Timestamp)
 	})
 
 	i := 0
 	j := 0
 
 	for i+1 < len(coordinates) && j < len(imageProps) {
-		t1 := utils.StringToTime(coordinates[i].Timestamp)
-		t2 := utils.StringToTime(coordinates[i+1].Timestamp)
 
-		if (t1.Equal(imageProps[j].CreatedAt) || t1.Before(imageProps[j].CreatedAt)) &&
-			t2.After(imageProps[j].CreatedAt) {
-			if t2.Sub(imageProps[j].CreatedAt) >= imageProps[j].CreatedAt.Sub(t1) {
+		if (coordinates[i].Timestamp.Equal(imageProps[j].CreatedAt) || coordinates[i].Timestamp.Before(imageProps[j].CreatedAt)) &&
+			coordinates[i+1].Timestamp.After(imageProps[j].CreatedAt) {
+			if coordinates[i+1].Timestamp.Sub(imageProps[j].CreatedAt) >= imageProps[j].CreatedAt.Sub(coordinates[i].Timestamp) {
 				imageProps[j].CoordinateId = coordinates[i].Id
 			} else {
 				imageProps[j].CoordinateId = coordinates[i+1].Id

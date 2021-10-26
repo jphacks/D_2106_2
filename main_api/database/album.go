@@ -16,7 +16,7 @@ func NewAlbumRepository(sqlHandler SqlHandler) repository.AlbumRepository {
 func (repo *AlbumRepository) StoreAlbum(album *domain.Album) (int, error) {
 	result := repo.SqlHandler.Conn.Create(&album)
 	if err := result.Error; err != nil {
-		return -1, nil
+		return -1, err
 	}
 
 	return album.Id, nil

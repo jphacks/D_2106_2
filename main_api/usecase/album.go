@@ -2,10 +2,12 @@ package usecase
 
 import (
 	"fmt"
+	"time"
 
 	"github.com/jphacks/D_2106_2/api"
 	"github.com/jphacks/D_2106_2/domain"
 	"github.com/jphacks/D_2106_2/repository"
+	"github.com/jphacks/D_2106_2/utils"
 )
 
 type AlbumUsecase struct {
@@ -15,34 +17,34 @@ type AlbumUsecase struct {
 }
 
 type ResponseLocation struct {
-	Id        int
-	Timestamp string
-	Latitude  float64
-	Longitude float64
-	ImageUrls []string
+	Id        int       `json:"id"`
+	Timestamp time.Time `json:"timestamp"`
+	Latitude  float64   `json:"latitude"`
+	Longitude float64   `json:"longitude"`
+	ImageUrls []string  `json:"imageUrls"`
 }
 
 type ResponseLocationData struct {
-	Location []ResponseLocation
+	Location []ResponseLocation `json:"location"`
 }
 
 func (uc *AlbumUsecase) CreateNewAlbum(
 	locations []*domain.Location,
 	userId int,
 	title string,
-	startAt string,
-	endedAt string,
+	startAt int64,
+	endedAt int64,
 	isPublic bool,
+	thumbnailImageId int,
 ) (int, error) {
 	album := &domain.Album{
-		UserId:    userId,
-		Title:     title,
-		StartedAt: startAt,
-		EndedAt:   endedAt,
-		IsPublic:  isPublic,
+		UserId:           userId,
+		Title:            title,
+		StartedAt:        utils.UnixToTime(startAt),
+		EndedAt:          utils.UnixToTime(endedAt),
+		IsPublic:         isPublic,
+		ThumbnailImageId: thumbnailImageId,
 	}
-
-	/* TODO: implement create album */
 
 	albumId, err := uc.AlbumRepo.StoreAlbum(album)
 	if err != nil {
@@ -57,7 +59,7 @@ func (uc *AlbumUsecase) CreateNewAlbum(
 		}
 		coordinates[i] = &domain.Coordinate{
 			AlbumId:   albumId,
-			Timestamp: locate.Timestamp,
+			Timestamp: utils.UnixToTime(locate.Timestamp),
 			Latitude:  locate.Latitude,
 			Longitude: locate.Longitude,
 			IsShow:    isShow,

@@ -17,12 +17,13 @@ type AlbumHandler struct {
 }
 
 type PostAlbumRequest struct {
-	Locations []*domain.Location `json:"locations"`
-	UserId    int                `json:"userId"`
-	Title     string             `json:"title"`
-	StartAt   string             `json:"startedAt"`
-	EndAt     string             `json:"endedAt"`
-	IsPublic  bool               `json:"isPublic"`
+	Locations        []*domain.Location `json:"locations"`
+	UserId           int                `json:"userId"`
+	Title            string             `json:"title"`
+	StartAt          int64              `json:"startedAt"`
+	EndAt            int64              `json:"endedAt"`
+	IsPublic         bool               `json:"isPublic"`
+	ThumbnailImageId int                `json:"thumbnailImageId"`
 }
 
 type PostAlbumResponse struct {
@@ -135,7 +136,15 @@ func (handler *AlbumHandler) PostAlbum(c *gin.Context) {
 		return
 	}
 
-	albumId, err := handler.uc.CreateNewAlbum(req.Locations, req.UserId, req.Title, req.StartAt, req.EndAt, req.IsPublic)
+	albumId, err := handler.uc.CreateNewAlbum(
+		req.Locations,
+		req.UserId,
+		req.Title,
+		req.StartAt,
+		req.EndAt,
+		req.IsPublic,
+		req.ThumbnailImageId,
+	)
 	if err != nil {
 		log.Print(err)
 		c.JSON(500, gin.H{"err": err.Error()})

@@ -1,10 +1,12 @@
 package handler
 
 import (
+	"fmt"
 	"log"
 	"mime/multipart"
 	"net/http"
 	"strconv"
+	"strings"
 
 	"github.com/gin-gonic/gin"
 	"github.com/jphacks/D_2106_2/repository"
@@ -15,8 +17,8 @@ type ImageHandler struct {
 	uc usecase.ImageUsecase
 }
 
-func NewImageHandler(imageRepo repository.ImageRepository, s3service repository.S3service) *ImageHandler {
-	uc := usecase.ImageUsecase{ImageRepo: imageRepo, S3service: s3service}
+func NewImageHandler(imageRepo repository.ImageRepository, s3service repository.S3service, coordinateRepo repository.CoordinateRepository) *ImageHandler {
+	uc := usecase.ImageUsecase{ImageRepo: imageRepo, S3service: s3service, CoordinateRepo: coordinateRepo}
 
 	return &ImageHandler{uc: uc}
 }
@@ -27,20 +29,26 @@ func (handler *ImageHandler) UploadImages(c *gin.Context) {
 	var err error
 
 	albumIdStr, ok := c.GetPostForm("album_id")
-	if !ok {
-		message := "`album_id` field not found"
-		log.Print(message)
-		c.JSON(400, gin.H{"err": message})
+	if !ok || albumIdStr == "" {
+		errorHandler(c, http.StatusBadRequest, "`album_id` field not found")
+		return
 	}
-	albumId, _ := strconv.Atoi(albumIdStr)
+	albumId, err := strconv.Atoi(albumIdStr)
+	if err != nil {
+		errorHandler(c, http.StatusBadRequest, "`album_id` is invalid value")
+		return
+	}
 
 	imageNumStr := c.PostForm("image_num")
-	if !ok {
-		message := "`image_num` field not found"
-		log.Print(message)
-		c.JSON(400, gin.H{"err": message})
+	if !ok || imageNumStr == "" {
+		errorHandler(c, http.StatusBadRequest, "`image_num` field not found")
+		return
 	}
-	imageNum, _ := strconv.Atoi(imageNumStr)
+	imageNum, err := strconv.Atoi(imageNumStr)
+	if err != nil {
+		errorHandler(c, http.StatusBadRequest, "`image_num` is invalid value")
+		return
+	}
 
 	for i := 0; i < imageNum; i++ {
 		filename := "image" + strconv.Itoa(i+1)
@@ -50,8 +58,14 @@ func (handler *ImageHandler) UploadImages(c *gin.Context) {
 			c.JSON(500, gin.H{"err": err.Error()})
 			return
 		}
+
+		if !validateImageName(strings.Split(header.Filename, ".")[0]) {
+			errorHandler(c, http.StatusBadRequest, "invalid file name")
+			return
+		}
+
 		images = append(images, image)
-		names = append(names, header.Filename)
+		names = append(names, fmt.Sprintf("%s-%s", albumIdStr, header.Filename))
 
 		log.Printf("Uploade %s, Size: %d", header.Filename, header.Size)
 	}
@@ -60,7 +74,22 @@ func (handler *ImageHandler) UploadImages(c *gin.Context) {
 	if err != nil {
 		log.Print(err)
 		c.JSON(500, gin.H{"err": err.Error()})
+		return
 	}
 
 	c.JSON(http.StatusOK, gin.H{"data": "data"})
+}
+
+func validateImageName(nameString string) bool {
+	_, err := strconv.Atoi(nameString)
+	if err != nil {
+		log.Print(err)
+		return false
+	}
+	return true
+}
+
+func errorHandler(c *gin.Context, code int, message string) {
+	log.Print(message)
+	c.JSON(code, gin.H{"err": message})
 }

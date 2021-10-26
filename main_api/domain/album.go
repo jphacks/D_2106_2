@@ -1,11 +1,15 @@
 package domain
 
+import (
+	"time"
+)
+
 type Album struct {
 	Id               int
 	UserId           int
 	Title            string
-	StartedAt        string
-	EndedAt          string
+	StartedAt        time.Time
+	EndedAt          time.Time
 	IsPublic         bool
-	ThumbnailImageId string
+	ThumbnailImageId int
 }

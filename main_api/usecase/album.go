@@ -32,16 +32,16 @@ func (uc *AlbumUsecase) CreateNewAlbum(
 	locations []*domain.Location,
 	userId int,
 	title string,
-	startAt string,
-	endedAt string,
+	startAt int64,
+	endedAt int64,
 	isPublic bool,
 	thumbnailImageId int,
 ) (int, error) {
 	album := &domain.Album{
 		UserId:           userId,
 		Title:            title,
-		StartedAt:        startAt,
-		EndedAt:          endedAt,
+		StartedAt:        utils.UnixToTime(startAt),
+		EndedAt:          utils.UnixToTime(endedAt),
 		IsPublic:         isPublic,
 		ThumbnailImageId: thumbnailImageId,
 	}

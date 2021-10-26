@@ -11,9 +11,9 @@ import (
 	"testing"
 
 	"github.com/gin-gonic/gin"
-	"github.com/go-playground/assert/v2"
 	"github.com/jphacks/D_2106_2/domain"
 	"github.com/jphacks/D_2106_2/testutils"
+	"github.com/stretchr/testify/assert"
 )
 
 type UploadImageForm struct {

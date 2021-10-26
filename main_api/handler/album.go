@@ -20,8 +20,8 @@ type PostAlbumRequest struct {
 	Locations        []*domain.Location `json:"locations"`
 	UserId           int                `json:"userId"`
 	Title            string             `json:"title"`
-	StartAt          string             `json:"startedAt"`
-	EndAt            string             `json:"endedAt"`
+	StartAt          int64              `json:"startedAt"`
+	EndAt            int64              `json:"endedAt"`
 	IsPublic         bool               `json:"isPublic"`
 	ThumbnailImageId int                `json:"thumbnailImageId"`
 }

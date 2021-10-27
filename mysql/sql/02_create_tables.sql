@@ -9,7 +9,7 @@ CREATE TABLE IF NOT EXISTS coordinates (
 
 CREATE TABLE IF NOT EXISTS albums (
     id INT AUTO_INCREMENT NOT NULL PRIMARY KEY,
-    user_id INT NOT NULL,
+    user_id VARCHAR(256) NOT NULL,
     title VARCHAR(128) NOT NULL,
     started_at TIMESTAMP NOT NULL,
     ended_at TIMESTAMP NOT NULL,
@@ -34,6 +34,6 @@ CREATE TABLE IF NOT EXISTS users (
 
 CREATE TABLE IF NOT EXISTS friends (
     id INT AUTO_INCREMENT NOT NULL PRIMARY KEY,
-    user_id INT NOT NULL,
-    follow_user_id INT NOT NULL
+    user_id VARCHAR(256) NOT NULL,
+    follow_user_id VARCHAR(256) NOT NULL
 );

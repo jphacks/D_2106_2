@@ -22,13 +22,13 @@ type UserHandler struct {
 }
 
 type RegisterUserRequest struct {
-	Username     string `json:"username"`
 	DeviceId     string `json:"deviceId"`
+	Username     string `json:"username"`
 	Introduction string `json:"introduction"`
 }
 
 type RegisterUserRespose struct {
-	UserId int `json:"user_id"`
+	UserId string `json:"user_id"`
 }
 
 func NewUserHandler(userRepo repository.UserRepository) *UserHandler {
@@ -68,7 +68,7 @@ func (handler *UserHandler) RegisterUser(c *gin.Context) {
 
 func (handler *UserHandler) GetUser(c *gin.Context) {
 	deviceId := c.Query("device_id")
-	user, err := handler.uc.GetUserByDeviceId(deviceId)
+	user, err := handler.uc.GetUserById(deviceId)
 	if err != nil {
 		log.Print(err)
 		c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})

@@ -13,16 +13,16 @@ func (uc *UserUsecase) RegisterNewUser(
 	userName string,
 	deviceId string,
 	introduction string,
-) (int, error) {
+) (string, error) {
 	user := &domain.User{
+		Id:           deviceId,
 		Name:         userName,
-		DeviceId:     deviceId,
 		Introduction: introduction,
 	}
 
 	userId, err := uc.UserRepo.CreateUser(user)
 	if err != nil {
-		return -1, err
+		return "", err
 	}
 	return userId, nil
 }
@@ -35,8 +35,8 @@ func (uc *UserUsecase) GetAllUsers() ([]*domain.User, error) {
 	return users, nil
 }
 
-func (uc *UserUsecase) GetUserByDeviceId(device_id string) (*domain.User, error) {
-	user, err := uc.UserRepo.GetUserByDeviceId(device_id)
+func (uc *UserUsecase) GetUserById(device_id string) (*domain.User, error) {
+	user, err := uc.UserRepo.GetUserById(device_id)
 	if err != nil {
 		return nil, err
 	}

@@ -32,7 +32,7 @@ func (repo *AlbumRepository) GetAllAlbums() ([]*domain.Album, error) {
 	return albums, nil
 }
 
-func (repo *AlbumRepository) GetAlbumsByUsers(userId int) ([]*domain.Album, error) {
+func (repo *AlbumRepository) GetAlbumsByUsers(userId string) ([]*domain.Album, error) {
 	albums := []*domain.Album{}
 	result := repo.SqlHandler.Conn.Where("user_id = ?", userId).Find(&albums)
 	if err := result.Error; err != nil {

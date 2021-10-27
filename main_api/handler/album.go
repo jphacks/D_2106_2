@@ -18,7 +18,7 @@ type AlbumHandler struct {
 
 type PostAlbumRequest struct {
 	Locations        []*domain.Location `json:"locations"`
-	UserId           int                `json:"userId"`
+	UserId           string             `json:"userId"`
 	Title            string             `json:"title"`
 	StartAt          int64              `json:"startedAt"`
 	EndAt            int64              `json:"endedAt"`
@@ -54,8 +54,7 @@ func (handler *AlbumHandler) GetAllAlbums(c *gin.Context) {
 }
 
 func (handler *AlbumHandler) GetUserAlbums(c *gin.Context) {
-	userIdStr := c.Query("album_id")
-	userId, _ := strconv.Atoi(userIdStr)
+	userId := c.Query("album_id")
 	albums, err := handler.uc.GetUserAlbums(userId)
 	if err != nil {
 		log.Print(err)
@@ -64,12 +63,6 @@ func (handler *AlbumHandler) GetUserAlbums(c *gin.Context) {
 	}
 
 	c.JSON(http.StatusOK, gin.H{"data": albums})
-}
-
-func (handler *AlbumHandler) GetAlbum(c *gin.Context) {
-	// userId := c.Query("user_id")
-
-	c.JSON(http.StatusOK, gin.H{"data": "data"})
 }
 
 func (handler *AlbumHandler) GetAlbumDetail(c *gin.Context) {

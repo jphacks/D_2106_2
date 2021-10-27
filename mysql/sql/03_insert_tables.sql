@@ -27,8 +27,8 @@ INSERT INTO coordinates (album_id, timestamp, latitude, longitude) VALUES (2, '2
 
 
 -- albums
-INSERT INTO albums (user_id, title, started_at, ended_at, is_public, thumbnail_image_id) VALUES (1, 'うんこモグモグおいしいにょ', '2021-10-23 13:00:00.000000', '2021-10-23 14:00:00.000000', 1, 1);
-INSERT INTO albums (user_id, title, started_at, ended_at, is_public, thumbnail_image_id) VALUES (2, 'Hey Bob How are you I`m fine thank you', '2021-10-24 13:00:00.000000', '2021-10-23 14:00:00.000000', 1, 13);
+INSERT INTO albums (user_id, title, started_at, ended_at, is_public, thumbnail_image_id) VALUES ('dummy_device_id_1', 'うんこモグモグおいしいにょ', '2021-10-23 13:00:00.000000', '2021-10-23 14:00:00.000000', 1, 1);
+INSERT INTO albums (user_id, title, started_at, ended_at, is_public, thumbnail_image_id) VALUES ('dummy_device_id_2', 'Hey Bob How are you I`m fine thank you', '2021-10-24 13:00:00.000000', '2021-10-23 14:00:00.000000', 1, 13);
 
 -- images
 INSERT INTO images (url, album_id, created_at, coordinate_id) VALUES ("https://pbs.twimg.com/media/Cw5hdTBUUAAWuIo.jpg", 1, '2021-10-23 13:25:35.000000', 1);
@@ -58,8 +58,8 @@ INSERT INTO images (url, album_id, created_at, coordinate_id) VALUES ("https://i
 INSERT INTO images (url, album_id, created_at, coordinate_id) VALUES ("https://i.ytimg.com/vi/gF4m7sCQ-4c/maxresdefault.jpg", 2, '2021-10-24 13:35:35.000000', 24);
 
 -- users
-INSERT INTO users (name, device_id, profile_image_url, introduction) VALUES ('Bob', 'dummy_device_id_1', 'https://pbs.twimg.com/media/Cw5hdTBUUAAWuIo.jpg', 'I am fine very very much');
-INSERT INTO users (name, device_id, profile_image_url, introduction) VALUES ('Tom', 'dummy_device_id_2', 'https://i.ytimg.com/vi/gF4m7sCQ-4c/maxresdefault.jpg', 'I want to go to zoo');
+INSERT INTO users (id, name, profile_image_url, introduction) VALUES ('dummy_device_id_1', 'Bob', 'https://pbs.twimg.com/media/Cw5hdTBUUAAWuIo.jpg', 'I am fine very very much');
+INSERT INTO users (id, name, profile_image_url, introduction) VALUES ('dummy_device_id_2', 'Tom', 'https://i.ytimg.com/vi/gF4m7sCQ-4c/maxresdefault.jpg', 'I want to go to zoo');
 
 -- friends
-INSERT INTO friends (user_id, follow_user_id) VALUES (1, 2);
+INSERT INTO friends (user_id, follow_user_id) VALUES ('dummy_device_id_1', 'dummy_device_id_2');

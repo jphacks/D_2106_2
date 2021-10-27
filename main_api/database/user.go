@@ -13,10 +13,10 @@ func NewUserRepository(sqlHandler SqlHandler) repository.UserRepository {
 	return &UserRepository{sqlHandler}
 }
 
-func (repo *UserRepository) CreateUser(user *domain.User) (int, error) {
+func (repo *UserRepository) CreateUser(user *domain.User) (string, error) {
 	result := repo.SqlHandler.Conn.Create(&user)
 	if err := result.Error; err != nil {
-		return -1, err
+		return "", err
 	}
 
 	return user.Id, nil
@@ -32,19 +32,9 @@ func (repo *UserRepository) GetAllUsers() ([]*domain.User, error) {
 	return users, nil
 }
 
-func (repo *UserRepository) GetUserById(userId int) (*domain.User, error) {
+func (repo *UserRepository) GetUserById(userId string) (*domain.User, error) {
 	user := &domain.User{}
 	result := repo.SqlHandler.Conn.Where("ID = ?", userId).First(&user)
-	if err := result.Error; err != nil {
-		return nil, err
-	}
-
-	return user, nil
-}
-
-func (repo *UserRepository) GetUserByDeviceId(device_id string) (*domain.User, error) {
-	user := &domain.User{}
-	result := repo.SqlHandler.Conn.Where("device_id = ?", device_id).First(&user)
 	if err := result.Error; err != nil {
 		return nil, err
 	}

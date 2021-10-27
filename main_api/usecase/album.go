@@ -30,7 +30,7 @@ type ResponseLocationData struct {
 
 func (uc *AlbumUsecase) CreateNewAlbum(
 	locations []*domain.Location,
-	userId int,
+	userId string,
 	title string,
 	startAt int64,
 	endedAt int64,
@@ -84,7 +84,7 @@ func (uc *AlbumUsecase) GetAllAlbums() ([]*domain.Album, error) {
 	return album, nil
 }
 
-func (uc *AlbumUsecase) GetUserAlbums(userId int) ([]*domain.Album, error) {
+func (uc *AlbumUsecase) GetUserAlbums(userId string) ([]*domain.Album, error) {
 	album, err := uc.AlbumRepo.GetAlbumsByUsers(userId)
 	if err != nil {
 		return nil, err

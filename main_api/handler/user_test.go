@@ -19,7 +19,7 @@ func TestRegisterUser(t *testing.T) {
 	tests := []struct {
 		name           string
 		userReq        interface{}
-		fakeCreateUser func(user *domain.User) (int, error)
+		fakeCreateUser func(user *domain.User) (string, error)
 		want           gin.H
 		code           int
 	}{
@@ -29,10 +29,10 @@ func TestRegisterUser(t *testing.T) {
 				Username: "test-name",
 				DeviceId: "test-device-id",
 			},
-			fakeCreateUser: func(user *domain.User) (int, error) {
-				return 1, nil
+			fakeCreateUser: func(user *domain.User) (string, error) {
+				return "test-device-id", nil
 			},
-			want: gin.H{"data": &RegisterUserRespose{UserId: 1}},
+			want: gin.H{"data": &RegisterUserRespose{UserId: "test-device-id"}},
 			code: http.StatusOK,
 		},
 		{
@@ -73,22 +73,22 @@ func TestRegisterUser(t *testing.T) {
 
 func TestGetUser(t *testing.T) {
 	tests := []struct {
-		name                  string
-		fakeGetUserByDeviceId func(deviceId string) (*domain.User, error)
-		want                  gin.H
-		code                  int
+		name            string
+		fakeGetUserById func(userId string) (*domain.User, error)
+		want            gin.H
+		code            int
 	}{
 		{
 			name: "success",
-			fakeGetUserByDeviceId: func(deviceId string) (*domain.User, error) {
-				return &domain.User{Id: 1}, nil
+			fakeGetUserById: func(userId string) (*domain.User, error) {
+				return &domain.User{Id: "test-id"}, nil
 			},
-			want: gin.H{"data": &domain.User{Id: 1}},
+			want: gin.H{"data": &domain.User{Id: "test-id"}},
 			code: http.StatusOK,
 		},
 		{
 			name: "failed get user by id",
-			fakeGetUserByDeviceId: func(deviceId string) (*domain.User, error) {
+			fakeGetUserById: func(userId string) (*domain.User, error) {
 				return nil, errors.New("get user error")
 			},
 			want: gin.H{"error": errors.New("get user error").Error()},
@@ -98,7 +98,7 @@ func TestGetUser(t *testing.T) {
 
 	for _, tt := range tests {
 		userRepo := testutils.FakeUserRepository{
-			FakeGetUserByDeviceId: tt.fakeGetUserByDeviceId,
+			FakeGetUserById: tt.fakeGetUserById,
 		}
 
 		userHandler := NewUserHandler(userRepo)

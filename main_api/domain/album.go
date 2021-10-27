@@ -6,7 +6,7 @@ import (
 
 type Album struct {
 	Id               int
-	UserId           int
+	UserId           string
 	Title            string
 	StartedAt        time.Time
 	EndedAt          time.Time

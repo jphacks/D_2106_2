@@ -71,7 +71,6 @@ func main() {
 
 	r.GET("/albums", func(c *gin.Context) { albumHandler.GetAllAlbums(c) })
 	r.GET("/albums/user", func(c *gin.Context) { albumHandler.GetUserAlbums(c) })
-	r.GET("/album", func(c *gin.Context) { albumHandler.GetAlbum(c) })
 	r.GET("/album/detail", func(c *gin.Context) { albumHandler.GetAlbumDetail(c) })
 	r.POST("/album", func(c *gin.Context) { albumHandler.PostAlbum(c) })
 

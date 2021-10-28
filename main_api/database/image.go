@@ -43,6 +43,16 @@ func (repo *ImageRepository) GetImagesByCoordinateId(coordinateId int) ([]*domai
 	if err := result.Error; err != nil {
 		return nil, err
 	}
-  
+
 	return images, nil
+}
+
+func (repo *ImageRepository) GetImagesById(imageId int) (*domain.Image, error) {
+	var image *domain.Image
+	result := repo.SqlHandler.Conn.Where("ID = ?", imageId).First(&image)
+	if err := result.Error; err != nil {
+		return nil, err
+	}
+
+	return image, nil
 }

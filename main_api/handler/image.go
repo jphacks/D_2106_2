@@ -17,7 +17,11 @@ type ImageHandler struct {
 	uc usecase.ImageUsecase
 }
 
-func NewImageHandler(imageRepo repository.ImageRepository, s3service repository.S3service, coordinateRepo repository.CoordinateRepository) *ImageHandler {
+func NewImageHandler(
+	imageRepo repository.ImageRepository,
+	s3service repository.S3service,
+	coordinateRepo repository.CoordinateRepository,
+) *ImageHandler {
 	uc := usecase.ImageUsecase{ImageRepo: imageRepo, S3service: s3service, CoordinateRepo: coordinateRepo}
 
 	return &ImageHandler{uc: uc}

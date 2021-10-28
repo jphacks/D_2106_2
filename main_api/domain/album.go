@@ -23,3 +23,7 @@ type AlbumDB struct {
 	IsPublic         bool
 	ThumbnailImageId int
 }
+
+func (AlbumDB) TableName() string {
+	return "albums"
+}

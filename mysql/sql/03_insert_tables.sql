@@ -31,31 +31,31 @@ INSERT INTO albums (user_id, title, started_at, ended_at, is_public, thumbnail_i
 INSERT INTO albums (user_id, title, started_at, ended_at, is_public, thumbnail_image_id) VALUES ('dummy_device_id_2', 'Hey Bob How are you I`m fine thank you', '2021-10-24 13:00:00.000000', '2021-10-23 14:00:00.000000', 1, 13);
 
 -- images
-INSERT INTO images (url, album_id, created_at, coordinate_id) VALUES ("https://pbs.twimg.com/media/Cw5hdTBUUAAWuIo.jpg", 1, '2021-10-23 13:25:35.000000', 1);
-INSERT INTO images (url, album_id, created_at, coordinate_id) VALUES ("https://pbs.twimg.com/media/Cw5hdTBUUAAWuIo.jpg", 1, '2021-10-23 13:30:35.000000', 2);
-INSERT INTO images (url, album_id, created_at, coordinate_id) VALUES ("https://pbs.twimg.com/media/Cw5hdTBUUAAWuIo.jpg", 1, '2021-10-23 13:35:35.000000', 3);
-INSERT INTO images (url, album_id, created_at, coordinate_id) VALUES ("https://pbs.twimg.com/media/Cw5hdTBUUAAWuIo.jpg", 1, '2021-10-23 13:25:35.000000', 4);
-INSERT INTO images (url, album_id, created_at, coordinate_id) VALUES ("https://pbs.twimg.com/media/Cw5hdTBUUAAWuIo.jpg", 1, '2021-10-23 13:30:35.000000', 5);
-INSERT INTO images (url, album_id, created_at, coordinate_id) VALUES ("https://pbs.twimg.com/media/Cw5hdTBUUAAWuIo.jpg", 1, '2021-10-23 13:35:35.000000', 6);
-INSERT INTO images (url, album_id, created_at, coordinate_id) VALUES ("https://pbs.twimg.com/media/Cw5hdTBUUAAWuIo.jpg", 1, '2021-10-23 13:25:35.000000', 7);
-INSERT INTO images (url, album_id, created_at, coordinate_id) VALUES ("https://pbs.twimg.com/media/Cw5hdTBUUAAWuIo.jpg", 1, '2021-10-23 13:30:35.000000', 8);
-INSERT INTO images (url, album_id, created_at, coordinate_id) VALUES ("https://pbs.twimg.com/media/Cw5hdTBUUAAWuIo.jpg", 1, '2021-10-23 13:35:35.000000', 9);
-INSERT INTO images (url, album_id, created_at, coordinate_id) VALUES ("https://pbs.twimg.com/media/Cw5hdTBUUAAWuIo.jpg", 1, '2021-10-23 13:25:35.000000', 10);
-INSERT INTO images (url, album_id, created_at, coordinate_id) VALUES ("https://pbs.twimg.com/media/Cw5hdTBUUAAWuIo.jpg", 1, '2021-10-23 13:30:35.000000', 11);
-INSERT INTO images (url, album_id, created_at, coordinate_id) VALUES ("https://pbs.twimg.com/media/Cw5hdTBUUAAWuIo.jpg", 1, '2021-10-23 13:35:35.000000', 12);
+INSERT INTO images (url, name, album_id, created_at, coordinate_id) VALUES ("https://pbs.twimg.com/media/Cw5hdTBUUAAWuIo.jpg","1-image.png", 1, '2021-10-23 13:25:35.000000', 1);
+INSERT INTO images (url, name, album_id, created_at, coordinate_id) VALUES ("https://pbs.twimg.com/media/Cw5hdTBUUAAWuIo.jpg","1-image.png", 1, '2021-10-23 13:30:35.000000', 2);
+INSERT INTO images (url, name, album_id, created_at, coordinate_id) VALUES ("https://pbs.twimg.com/media/Cw5hdTBUUAAWuIo.jpg","1-thumbnail.png", 1, '2021-10-23 13:35:35.000000', 3);
+INSERT INTO images (url, name, album_id, created_at, coordinate_id) VALUES ("https://pbs.twimg.com/media/Cw5hdTBUUAAWuIo.jpg","1-image.png", 1, '2021-10-23 13:25:35.000000', 4);
+INSERT INTO images (url, name, album_id, created_at, coordinate_id) VALUES ("https://pbs.twimg.com/media/Cw5hdTBUUAAWuIo.jpg","1-image.png", 1, '2021-10-23 13:30:35.000000', 5);
+INSERT INTO images (url, name, album_id, created_at, coordinate_id) VALUES ("https://pbs.twimg.com/media/Cw5hdTBUUAAWuIo.jpg","1-image.png", 1, '2021-10-23 13:35:35.000000', 6);
+INSERT INTO images (url, name, album_id, created_at, coordinate_id) VALUES ("https://pbs.twimg.com/media/Cw5hdTBUUAAWuIo.jpg","1-image.png", 1, '2021-10-23 13:25:35.000000', 7);
+INSERT INTO images (url, name, album_id, created_at, coordinate_id) VALUES ("https://pbs.twimg.com/media/Cw5hdTBUUAAWuIo.jpg","1-image.png", 1, '2021-10-23 13:30:35.000000', 8);
+INSERT INTO images (url, name, album_id, created_at, coordinate_id) VALUES ("https://pbs.twimg.com/media/Cw5hdTBUUAAWuIo.jpg","1-image.png", 1, '2021-10-23 13:35:35.000000', 9);
+INSERT INTO images (url, name, album_id, created_at, coordinate_id) VALUES ("https://pbs.twimg.com/media/Cw5hdTBUUAAWuIo.jpg","1-image.png", 1, '2021-10-23 13:25:35.000000', 10);
+INSERT INTO images (url, name, album_id, created_at, coordinate_id) VALUES ("https://pbs.twimg.com/media/Cw5hdTBUUAAWuIo.jpg","1-image.png", 1, '2021-10-23 13:30:35.000000', 11);
+INSERT INTO images (url, name, album_id, created_at, coordinate_id) VALUES ("https://pbs.twimg.com/media/Cw5hdTBUUAAWuIo.jpg","1-image.png", 1, '2021-10-23 13:35:35.000000', 12);
 
-INSERT INTO images (url, album_id, created_at, coordinate_id) VALUES ("https://i.ytimg.com/vi/gF4m7sCQ-4c/maxresdefault.jpg", 2, '2021-10-24 13:25:35.000000', 13);
-INSERT INTO images (url, album_id, created_at, coordinate_id) VALUES ("https://i.ytimg.com/vi/gF4m7sCQ-4c/maxresdefault.jpg", 2, '2021-10-24 13:30:35.000000', 14);
-INSERT INTO images (url, album_id, created_at, coordinate_id) VALUES ("https://i.ytimg.com/vi/gF4m7sCQ-4c/maxresdefault.jpg", 2, '2021-10-24 13:35:35.000000', 15);
-INSERT INTO images (url, album_id, created_at, coordinate_id) VALUES ("https://i.ytimg.com/vi/gF4m7sCQ-4c/maxresdefault.jpg", 2, '2021-10-24 13:25:35.000000', 16);
-INSERT INTO images (url, album_id, created_at, coordinate_id) VALUES ("https://i.ytimg.com/vi/gF4m7sCQ-4c/maxresdefault.jpg", 2, '2021-10-24 13:30:35.000000', 17);
-INSERT INTO images (url, album_id, created_at, coordinate_id) VALUES ("https://i.ytimg.com/vi/gF4m7sCQ-4c/maxresdefault.jpg", 2, '2021-10-24 13:35:35.000000', 18);
-INSERT INTO images (url, album_id, created_at, coordinate_id) VALUES ("https://i.ytimg.com/vi/gF4m7sCQ-4c/maxresdefault.jpg", 2, '2021-10-24 13:25:35.000000', 19);
-INSERT INTO images (url, album_id, created_at, coordinate_id) VALUES ("https://i.ytimg.com/vi/gF4m7sCQ-4c/maxresdefault.jpg", 2, '2021-10-24 13:30:35.000000', 20);
-INSERT INTO images (url, album_id, created_at, coordinate_id) VALUES ("https://i.ytimg.com/vi/gF4m7sCQ-4c/maxresdefault.jpg", 2, '2021-10-24 13:35:35.000000', 21);
-INSERT INTO images (url, album_id, created_at, coordinate_id) VALUES ("https://i.ytimg.com/vi/gF4m7sCQ-4c/maxresdefault.jpg", 2, '2021-10-24 13:25:35.000000', 22);
-INSERT INTO images (url, album_id, created_at, coordinate_id) VALUES ("https://i.ytimg.com/vi/gF4m7sCQ-4c/maxresdefault.jpg", 2, '2021-10-24 13:30:35.000000', 23);
-INSERT INTO images (url, album_id, created_at, coordinate_id) VALUES ("https://i.ytimg.com/vi/gF4m7sCQ-4c/maxresdefault.jpg", 2, '2021-10-24 13:35:35.000000', 24);
+INSERT INTO images (url, name, album_id, created_at, coordinate_id) VALUES ("https://i.ytimg.com/vi/gF4m7sCQ-4c/maxresdefault.jpg","2-thumbnail.png", 2, '2021-10-24 13:25:35.000000', 13);
+INSERT INTO images (url, name, album_id, created_at, coordinate_id) VALUES ("https://i.ytimg.com/vi/gF4m7sCQ-4c/maxresdefault.jpg","2-image.png", 2, '2021-10-24 13:30:35.000000', 14);
+INSERT INTO images (url, name, album_id, created_at, coordinate_id) VALUES ("https://i.ytimg.com/vi/gF4m7sCQ-4c/maxresdefault.jpg","2-image.png", 2, '2021-10-24 13:35:35.000000', 15);
+INSERT INTO images (url, name, album_id, created_at, coordinate_id) VALUES ("https://i.ytimg.com/vi/gF4m7sCQ-4c/maxresdefault.jpg","2-image.png", 2, '2021-10-24 13:25:35.000000', 16);
+INSERT INTO images (url, name, album_id, created_at, coordinate_id) VALUES ("https://i.ytimg.com/vi/gF4m7sCQ-4c/maxresdefault.jpg","2-image.png", 2, '2021-10-24 13:30:35.000000', 17);
+INSERT INTO images (url, name, album_id, created_at, coordinate_id) VALUES ("https://i.ytimg.com/vi/gF4m7sCQ-4c/maxresdefault.jpg","2-image.png", 2, '2021-10-24 13:35:35.000000', 18);
+INSERT INTO images (url, name, album_id, created_at, coordinate_id) VALUES ("https://i.ytimg.com/vi/gF4m7sCQ-4c/maxresdefault.jpg","2-image.png", 2, '2021-10-24 13:25:35.000000', 19);
+INSERT INTO images (url, name, album_id, created_at, coordinate_id) VALUES ("https://i.ytimg.com/vi/gF4m7sCQ-4c/maxresdefault.jpg","2-image.png", 2, '2021-10-24 13:30:35.000000', 20);
+INSERT INTO images (url, name, album_id, created_at, coordinate_id) VALUES ("https://i.ytimg.com/vi/gF4m7sCQ-4c/maxresdefault.jpg","2-image.png", 2, '2021-10-24 13:35:35.000000', 21);
+INSERT INTO images (url, name, album_id, created_at, coordinate_id) VALUES ("https://i.ytimg.com/vi/gF4m7sCQ-4c/maxresdefault.jpg","2-image.png", 2, '2021-10-24 13:25:35.000000', 22);
+INSERT INTO images (url, name, album_id, created_at, coordinate_id) VALUES ("https://i.ytimg.com/vi/gF4m7sCQ-4c/maxresdefault.jpg","2-image.png", 2, '2021-10-24 13:30:35.000000', 23);
+INSERT INTO images (url, name, album_id, created_at, coordinate_id) VALUES ("https://i.ytimg.com/vi/gF4m7sCQ-4c/maxresdefault.jpg","2-image.png", 2, '2021-10-24 13:35:35.000000', 24);
 
 -- users
 INSERT INTO users (id, name, profile_image_url, introduction) VALUES ('dummy_device_id_1', 'Bob', 'https://pbs.twimg.com/media/Cw5hdTBUUAAWuIo.jpg', 'I am fine very very much');

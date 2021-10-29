@@ -1,6 +1,7 @@
 package usecase
 
 import (
+	"fmt"
 	"mime/multipart"
 	"sort"
 	"strconv"
@@ -29,7 +30,12 @@ func (uc *ImageUsecase) UploadImages(albumId int, images []multipart.File, names
 	coordinates, _ := uc.CoordinateRepo.GetCoordinatesByAlbumId(albumId)
 
 	for _, name := range names {
-		unixtimeStr := strings.Split(name, ".")[0]
+
+		removedPrefix := strings.Split(name, "-")[1]
+		fmt.Println("removed")
+		fmt.Println(removedPrefix)
+		unixtimeStr := strings.Split(removedPrefix, ".")[0]
+		fmt.Println(unixtimeStr)
 		unixtime, _ := strconv.Atoi(unixtimeStr)
 
 		imageProps = append(imageProps,
@@ -56,8 +62,10 @@ func (uc *ImageUsecase) UploadImages(albumId int, images []multipart.File, names
 			coordinates[i+1].Timestamp.After(imageProps[j].CreatedAt) {
 			if coordinates[i+1].Timestamp.Sub(imageProps[j].CreatedAt) >= imageProps[j].CreatedAt.Sub(coordinates[i].Timestamp) {
 				imageProps[j].CoordinateId = coordinates[i].Id
+				fmt.Println(imageProps[j].CoordinateId)
 			} else {
 				imageProps[j].CoordinateId = coordinates[i+1].Id
+				fmt.Println(imageProps[j].CoordinateId)
 			}
 			j++
 		} else {

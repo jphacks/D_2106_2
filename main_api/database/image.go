@@ -23,6 +23,16 @@ func (repo *ImageRepository) GetImagesByAlbumId(albumId int) ([]*domain.Image, e
 	return images, nil
 }
 
+func (repo *ImageRepository) GetImageByImageName(imageName string) (*domain.Image, error) {
+	var image *domain.Image
+	result := repo.SqlHandler.Conn.Where("name = ?", imageName).First(&image)
+	if err := result.Error; err != nil {
+		return nil, err
+	}
+
+	return image, nil
+}
+
 func (repo *ImageRepository) StoreImages(images []*domain.Image) ([]int, error) {
 	result := repo.SqlHandler.Conn.Create(&images)
 	if err := result.Error; err != nil {

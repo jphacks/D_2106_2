@@ -77,9 +77,11 @@ func (uc *ImageUsecase) UploadImages(albumId int, images []multipart.File, names
 		parsedUrl := strings.Split(url, "/")
 		for _, image := range imageProps {
 			if image.Name == parsedUrl[len(parsedUrl)-1] {
+
 				dbInputs = append(dbInputs,
 					&domain.Image{
 						Url:          url,
+						Name:         image.Name,
 						AlbumId:      albumId,
 						CreatedAt:    image.CreatedAt,
 						CoordinateId: image.CoordinateId,

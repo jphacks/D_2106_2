@@ -11,6 +11,7 @@ type Album struct {
 	StartedAt         time.Time `json:"starteAt"`
 	EndedAt           time.Time `json:"endedAt"`
 	IsPublic          bool      `json:"isPubliuc"`
+	Spot              string
 	ThumbnailImageUrl string    `json:"thumbnailImage_url"`
 	CreatedAt         time.Time `json:"createdAt"`
 }
@@ -22,6 +23,7 @@ type AlbumDB struct {
 	StartedAt        time.Time
 	EndedAt          time.Time
 	IsPublic         bool
+	Spot             string
 	ThumbnailImageId int
 	CreatedAt        time.Time
 }

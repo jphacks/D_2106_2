@@ -13,7 +13,7 @@ func NewAlbumRepository(sqlHandler SqlHandler) repository.AlbumRepository {
 	return &AlbumRepository{sqlHandler}
 }
 
-func (repo *AlbumRepository) StoreAlbum(album *domain.Album) (int, error) {
+func (repo *AlbumRepository) StoreAlbum(album *domain.AlbumDB) (int, error) {
 	result := repo.SqlHandler.Conn.Create(&album)
 	if err := result.Error; err != nil {
 		return -1, err
@@ -23,8 +23,18 @@ func (repo *AlbumRepository) StoreAlbum(album *domain.Album) (int, error) {
 }
 
 func (repo *AlbumRepository) GetAllAlbums() ([]*domain.Album, error) {
+	columns := []string{
+		"albums.id",
+		"user_id",
+		"title",
+		"started_at",
+		"ended_at",
+		"is_public",
+		"images.url as ThumbnailImageUrl",
+	}
 	albums := []*domain.Album{}
-	result := repo.SqlHandler.Conn.Find(&albums)
+
+	result := repo.SqlHandler.Conn.Table("albums").Select(columns).Joins("left join images on images.id = albums.thumbnail_image_id").Scan(&albums)
 	if err := result.Error; err != nil {
 		return nil, err
 	}

@@ -2,6 +2,7 @@ package usecase
 
 import (
 	"fmt"
+	"strconv"
 	"time"
 
 	"github.com/jphacks/D_2106_2/api"
@@ -36,15 +37,13 @@ func (uc *AlbumUsecase) CreateNewAlbum(
 	startAt int64,
 	endedAt int64,
 	isPublic bool,
-	thumbnailImageId int,
 ) (int, error) {
 	album := &domain.AlbumDB{
-		UserId:           userId,
-		Title:            title,
-		StartedAt:        utils.UnixToTime(startAt),
-		EndedAt:          utils.UnixToTime(endedAt),
-		IsPublic:         isPublic,
-		ThumbnailImageId: thumbnailImageId,
+		UserId:    userId,
+		Title:     title,
+		StartedAt: utils.UnixToTime(startAt),
+		EndedAt:   utils.UnixToTime(endedAt),
+		IsPublic:  isPublic,
 	}
 
 	albumId, err := uc.AlbumRepo.StoreAlbum(album)
@@ -165,4 +164,27 @@ func (uc *AlbumUsecase) ClusteringData2Response(albumId int, tempCoordinates *[]
 	}
 
 	return &locationData, nil
+}
+
+func (uc *AlbumUsecase) UpdateThumbnailAndSpot(albumId int, thumbnailImageName string) error {
+	strAlbumId := strconv.Itoa(albumId)
+	imgName := fmt.Sprintf("%s-%s", strAlbumId, thumbnailImageName)
+	image, err := uc.ImageRepo.GetImageByImageName(imgName)
+	if err != nil {
+		return err
+	}
+	coordinate, err := uc.CoordinateRepo.GetCoordinateById(image.CoordinateId)
+	if err != nil {
+		return err
+	}
+	city, prefecture, err := utils.GetMunicipalitiesByGeoLocation(coordinate.Latitude, coordinate.Longitude)
+	if err != nil {
+		return err
+	}
+	spot := fmt.Sprintf("%s%s", prefecture, city)
+
+	if err := uc.AlbumRepo.UpdateThumbnailAndSpotByAlbumId(albumId, image.Id, spot); err != nil {
+		return err
+	}
+	return nil
 }

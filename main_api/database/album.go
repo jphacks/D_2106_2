@@ -64,3 +64,11 @@ func (repo *AlbumRepository) GetAlbumsByUsers(userId string) ([]*domain.Album, e
 
 	return albums, nil
 }
+
+func (repo *AlbumRepository) UpdateThumbnailAndSpotByAlbumId(albumId int, thumbnailImageId int, spot string) error {
+	result := repo.SqlHandler.Conn.Table("albums").Where("id = ?", albumId).Updates(map[string]interface{}{"thumbnail_image_id": thumbnailImageId, "spot": spot})
+	if err := result.Error; err != nil {
+		return err
+	}
+	return nil
+}

@@ -7,6 +7,7 @@ import (
 
 	"github.com/gin-gonic/gin"
 
+	"github.com/jphacks/D_2106_2/api"
 	"github.com/jphacks/D_2106_2/domain"
 	"github.com/jphacks/D_2106_2/repository"
 	"github.com/jphacks/D_2106_2/usecase"
@@ -99,12 +100,7 @@ func (handler *AlbumHandler) GetAlbumDetail(c *gin.Context) {
 		return
 	}
 	if clusterData == nil {
-		c.JSON(http.StatusOK, gin.H{"data": struct {
-			Location []string `json:"location"`
-		}{
-			Location: make([]string, 0),
-		}})
-		return
+		clusterData = &api.ClusterData{}
 	}
 
 	var tempCoordinates []domain.Coordinate
@@ -119,7 +115,7 @@ func (handler *AlbumHandler) GetAlbumDetail(c *gin.Context) {
 			})
 		}
 	}
-	responseData, err := handler.uc.ClusteringData2Response(&tempCoordinates)
+	responseData, err := handler.uc.ClusteringData2Response(albumId, &tempCoordinates)
 	if err != nil {
 		log.Print(err)
 		c.JSON(http.StatusInternalServerError, gin.H{"error": FailedClustering.Error()})

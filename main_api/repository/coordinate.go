@@ -7,4 +7,5 @@ type CoordinateRepository interface {
 	GetCoordinateByImageId(imageId int) (*domain.Coordinate, error)
 	GetCoordinatesByAlbumId(albumId int) ([]*domain.Coordinate, error)
 	GetCoordinateById(coordinateId int) (*domain.Coordinate, error)
+	GetRouteByAlbumId(albumId int) ([]*domain.Location, error)
 }

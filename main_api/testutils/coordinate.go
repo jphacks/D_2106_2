@@ -7,6 +7,7 @@ type FakeCoordinateRepository struct {
 	FakeGetCoordinateByImageId  func(imageId int) (*domain.Coordinate, error)
 	FakeGetCoordinatesByAlbumId func(albumId int) ([]*domain.Coordinate, error)
 	FakeGetCoordinateById       func(coordinateId int) (*domain.Coordinate, error)
+	FakeGetRouteByAlbumId       func(albumId int) ([]*domain.Location, error)
 }
 
 func (repo FakeCoordinateRepository) StoreCoordinates(coordinates []*domain.Coordinate) ([]int, error) {
@@ -23,4 +24,8 @@ func (repo FakeCoordinateRepository) GetCoordinatesByAlbumId(albumId int) ([]*do
 
 func (repo FakeCoordinateRepository) GetCoordinateById(coordinateId int) (*domain.Coordinate, error) {
 	return repo.FakeGetCoordinateById(coordinateId)
+}
+
+func (repo FakeCoordinateRepository) GetRouteByAlbumId(albumId int) ([]*domain.Location, error) {
+	return repo.FakeGetRouteByAlbumId(albumId)
 }

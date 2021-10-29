@@ -27,12 +27,12 @@ INSERT INTO coordinates (album_id, timestamp, latitude, longitude, is_show) VALU
 
 
 -- albums
-INSERT INTO albums (user_id, title, started_at, ended_at, is_public, spot ,thumbnail_image_id) VALUES ('dummy_device_id_1', 'うんこモグモグおいしいにょ', '2021-10-23 13:00:00.000000', '2021-10-23 14:00:00.000000', 1, "愛知県名古屋市", 0);
-INSERT INTO albums (user_id, title, started_at, ended_at, is_public, spot ,thumbnail_image_id) VALUES ('dummy_device_id_2', 'Hey Bob How are you I`m fine thank you', '2021-10-24 13:00:00.000000', '2021-10-23 14:00:00.000000', 1, "愛知県名古屋市",0);
+INSERT INTO albums (user_id, title, started_at, ended_at, is_public, spot ,thumbnail_image_id) VALUES ('dummy_device_id_1', 'うんこモグモグおいしいにょ', '2021-10-23 13:00:00.000000', '2021-10-23 14:00:00.000000', 1, "愛知県名古屋市", 1);
+INSERT INTO albums (user_id, title, started_at, ended_at, is_public, spot ,thumbnail_image_id) VALUES ('dummy_device_id_2', 'Hey Bob How are you I`m fine thank you', '2021-10-24 13:00:00.000000', '2021-10-23 14:00:00.000000', 1, "愛知県名古屋市",1);
 
 -- images
-INSERT INTO images (url, name, album_id, created_at, coordinate_id) VALUES ("https://pbs.twimg.com/media/Cw5hdTBUUAAWuIo.jpg","1-image.png", 1, '2021-10-23 13:30:35.000000', 2);
 INSERT INTO images (url, name, album_id, created_at, coordinate_id) VALUES ("https://pbs.twimg.com/media/Cw5hdTBUUAAWuIo.jpg","1-image.png", 1, '2021-10-23 13:25:35.000000', 1);
+INSERT INTO images (url, name, album_id, created_at, coordinate_id) VALUES ("https://pbs.twimg.com/media/Cw5hdTBUUAAWuIo.jpg","1-image.png", 1, '2021-10-23 13:30:35.000000', 2);
 INSERT INTO images (url, name, album_id, created_at, coordinate_id) VALUES ("https://pbs.twimg.com/media/Cw5hdTBUUAAWuIo.jpg","1-thumbnail.png", 1, '2021-10-23 13:35:35.000000', 3);
 INSERT INTO images (url, name, album_id, created_at, coordinate_id) VALUES ("https://pbs.twimg.com/media/Cw5hdTBUUAAWuIo.jpg","1-image.png", 1, '2021-10-23 13:25:35.000000', 4);
 INSERT INTO images (url, name, album_id, created_at, coordinate_id) VALUES ("https://pbs.twimg.com/media/Cw5hdTBUUAAWuIo.jpg","1-image.png", 1, '2021-10-23 13:30:35.000000', 5);

@@ -19,3 +19,7 @@ func TimeToString(t time.Time) string {
 func UnixToTime(t int64) time.Time {
 	return time.Unix(t, 0)
 }
+
+func TimeToUnix(t time.Time) int64 {
+	return t.Unix()
+}

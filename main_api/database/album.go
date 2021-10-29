@@ -29,6 +29,7 @@ func (repo *AlbumRepository) GetAllAlbums() ([]*domain.Album, error) {
 		"title",
 		"started_at",
 		"ended_at",
+		"spot",
 		"is_public",
 		"images.url as ThumbnailImageUrl",
 	}
@@ -43,8 +44,20 @@ func (repo *AlbumRepository) GetAllAlbums() ([]*domain.Album, error) {
 }
 
 func (repo *AlbumRepository) GetAlbumsByUsers(userId string) ([]*domain.Album, error) {
+	columns := []string{
+		"albums.id",
+		"user_id",
+		"title",
+		"started_at",
+		"ended_at",
+		"spot",
+		"is_public",
+		"images.url as ThumbnailImageUrl",
+	}
+	join := "left join images on images.id = albums.thumbnail_image_id"
 	albums := []*domain.Album{}
-	result := repo.SqlHandler.Conn.Where("user_id = ?", userId).Find(&albums)
+
+	result := repo.SqlHandler.Conn.Table("albums").Select(columns).Joins(join).Where("user_id = ?", userId).Scan(&albums)
 	if err := result.Error; err != nil {
 		return nil, err
 	}

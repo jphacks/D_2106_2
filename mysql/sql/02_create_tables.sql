@@ -14,6 +14,7 @@ CREATE TABLE IF NOT EXISTS albums (
     started_at TIMESTAMP NOT NULL,
     ended_at TIMESTAMP NOT NULL,
     is_public BOOLEAN NOT NULL,
+    spot VARCHAR(32) NOT NULL,
     thumbnail_image_id INT NOT NULL,
     created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP
 );

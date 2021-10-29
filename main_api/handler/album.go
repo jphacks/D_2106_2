@@ -17,6 +17,10 @@ type AlbumHandler struct {
 	uc usecase.AlbumUsecase
 }
 
+type GetAllAlbumsResponse struct {
+	Albums []*domain.AlbumResponse `json:"albums"`
+}
+
 type PostAlbumRequest struct {
 	Locations        []*domain.Location `json:"locations"`
 	UserId           string             `json:"userId"`
@@ -49,7 +53,13 @@ func (handler *AlbumHandler) GetAllAlbums(c *gin.Context) {
 		return
 	}
 
-	c.JSON(http.StatusOK, gin.H{"data": albums})
+	response := make([]*domain.AlbumResponse, len(albums))
+	for i, album := range albums {
+		albumResponse := album.ToResponse()
+		response[i] = albumResponse
+	}
+
+	c.JSON(http.StatusOK, gin.H{"data": GetAllAlbumsResponse{response}})
 }
 
 func (handler *AlbumHandler) GetUserAlbums(c *gin.Context) {
@@ -68,7 +78,13 @@ func (handler *AlbumHandler) GetUserAlbums(c *gin.Context) {
 		return
 	}
 
-	c.JSON(http.StatusOK, gin.H{"data": albums})
+	response := make([]*domain.AlbumResponse, len(albums))
+	for i, album := range albums {
+		albumResponse := album.ToResponse()
+		response[i] = albumResponse
+	}
+
+	c.JSON(http.StatusOK, gin.H{"data": GetAllAlbumsResponse{response}})
 }
 
 func (handler *AlbumHandler) GetAlbumDetail(c *gin.Context) {

@@ -12,6 +12,7 @@ type Album struct {
 	EndedAt           time.Time
 	IsPublic          bool
 	ThumbnailImageUrl string
+	CreatedAt         time.Time
 }
 
 type AlbumDB struct {
@@ -22,6 +23,7 @@ type AlbumDB struct {
 	EndedAt          time.Time
 	IsPublic         bool
 	ThumbnailImageId int
+	CreatedAt        time.Time
 }
 
 func (AlbumDB) TableName() string {

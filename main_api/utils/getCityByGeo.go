@@ -2,6 +2,7 @@ package utils
 
 import (
 	"encoding/json"
+	"errors"
 	"io/ioutil"
 	"log"
 	"net/http"
@@ -22,11 +23,12 @@ type Response struct {
 	Response Location `json:"response"`
 }
 
-func GetMunicipalitiesByGeoLocation(latitude float64, longtitude float64) (string, string) {
+func GetMunicipalitiesByGeoLocation(latitude float64, longtitude float64) (string, string, error) {
 	url := "http://geoapi.heartrails.com/api/json"
 	request, err := http.NewRequest("GET", url, nil)
 	if err != nil {
 		log.Fatal(err)
+		return "", "", err
 	}
 
 	params := request.URL.Query()
@@ -44,18 +46,25 @@ func GetMunicipalitiesByGeoLocation(latitude float64, longtitude float64) (strin
 	response, err := client.Do(request)
 	if err != nil {
 		log.Fatal(err)
+		return "", "", err
 	}
 	defer response.Body.Close()
 
 	body, err := ioutil.ReadAll(response.Body)
 	if err != nil {
 		log.Fatal(err)
+		return "", "", err
 	}
 
 	var res Response
 	err = json.Unmarshal(body, &res)
 	if err != nil {
 		log.Fatal(err)
+		return "", "", err
 	}
-	return res.Response.Location[0].City, res.Response.Location[0].Prefecture
+
+	if len(res.Response.Location) == 0 {
+		return "", "", errors.New("coudn't obtain municipalities")
+	}
+	return res.Response.Location[0].City, res.Response.Location[0].Prefecture, nil
 }

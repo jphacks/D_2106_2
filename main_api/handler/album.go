@@ -30,13 +30,11 @@ type PostAlbumResponse struct {
 	Id int `json:"id"`
 }
 
-// type TempLocation struct {
-// 	GpsId     int     `json:"id"`
-// 	Latitude  float64 `json:"latitude`
-// 	Longitude float64 `json:"longitude`
-// }
-
-func NewAlbumHandler(albumRepo repository.AlbumRepository, coordinateRepo repository.CoordinateRepository, imageRepo repository.ImageRepository) *AlbumHandler {
+func NewAlbumHandler(
+	albumRepo repository.AlbumRepository,
+	coordinateRepo repository.CoordinateRepository,
+	imageRepo repository.ImageRepository,
+) *AlbumHandler {
 	uc := usecase.AlbumUsecase{AlbumRepo: albumRepo, CoordinateRepo: coordinateRepo, ImageRepo: imageRepo}
 
 	return &AlbumHandler{uc: uc}
@@ -46,7 +44,7 @@ func (handler *AlbumHandler) GetAllAlbums(c *gin.Context) {
 	albums, err := handler.uc.GetAllAlbums()
 	if err != nil {
 		log.Print(err)
-		c.JSON(500, gin.H{"error": err.Error()})
+		c.JSON(http.StatusInternalServerError, gin.H{"error": FailedGetAlbum.Error()})
 		return
 	}
 
@@ -54,11 +52,18 @@ func (handler *AlbumHandler) GetAllAlbums(c *gin.Context) {
 }
 
 func (handler *AlbumHandler) GetUserAlbums(c *gin.Context) {
-	userId := c.Query("album_id")
+	userId := c.Query("user_id")
+	if userId == "" {
+		err := InvalidRequest
+		log.Print(err.Error())
+		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
+		return
+	}
+
 	albums, err := handler.uc.GetUserAlbums(userId)
 	if err != nil {
 		log.Print(err)
-		c.JSON(500, gin.H{"error": err.Error()})
+		c.JSON(http.StatusInternalServerError, gin.H{"error": FailedGetAlbum.Error()})
 		return
 	}
 
@@ -71,22 +76,26 @@ func (handler *AlbumHandler) GetAlbumDetail(c *gin.Context) {
 	lon1, _ := strconv.ParseFloat(c.Query("lon1"), 64)
 	lat2, _ := strconv.ParseFloat(c.Query("lat2"), 64)
 	lon2, _ := strconv.ParseFloat(c.Query("lon2"), 64)
+
 	if albumId <= 0 {
-		c.JSON(400, gin.H{"error": "album_id is invalid"})
+		err := InvalidRequest
+		log.Print(err.Error())
+		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
 		return
 	}
-	if (-90 > lat1) || (lat2 > 90) || (lat1 >= lat2) {
-		c.JSON(400, gin.H{"error": "latitude is really? -90 = lat = 90"})
+	latCondition := (-90 > lat1) || (lat2 > 90) || (lat1 >= lat2)
+	lonCondition := (-180 > lon1) || (lon2 > 180) || (lon1 >= lon2)
+	if latCondition || lonCondition {
+		err := InvalidCoordinate
+		log.Print(err.Error())
+		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
 		return
 	}
-	if (-180 > lon1) || (lon2 > 180) || (lon1 >= lon2) {
-		c.JSON(400, gin.H{"error": "longitude is really? -180 = lat = 180"})
-		return
-	}
+
 	clusterData, err := handler.uc.ClusteringGpsPoint(albumId, lat1, lat2, lon1, lon2)
 	if err != nil {
 		log.Print(err)
-		c.JSON(500, gin.H{"error": err.Error()})
+		c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
 		return
 	}
 	if clusterData == nil {
@@ -113,7 +122,7 @@ func (handler *AlbumHandler) GetAlbumDetail(c *gin.Context) {
 	responseData, err := handler.uc.ClusteringData2Response(&tempCoordinates)
 	if err != nil {
 		log.Print(err)
-		c.JSON(500, gin.H{"error": err.Error()})
+		c.JSON(http.StatusInternalServerError, gin.H{"error": FailedClustering.Error()})
 		return
 	}
 
@@ -125,7 +134,14 @@ func (handler *AlbumHandler) PostAlbum(c *gin.Context) {
 	err := c.ShouldBindJSON(&req)
 	if err != nil {
 		log.Print(err)
-		c.JSON(500, gin.H{"error": err.Error()})
+		c.JSON(http.StatusBadRequest, gin.H{"error": InvalidRequest.Error()})
+		return
+	}
+
+	if req.UserId == "" || len(req.Locations) <= 0 {
+		err = InvalidRequest
+		log.Println(err.Error())
+		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
 		return
 	}
 
@@ -140,7 +156,7 @@ func (handler *AlbumHandler) PostAlbum(c *gin.Context) {
 	)
 	if err != nil {
 		log.Print(err)
-		c.JSON(500, gin.H{"error": err.Error()})
+		c.JSON(http.StatusInternalServerError, gin.H{"error": FailedCreateNewAlbum.Error()})
 		return
 	}
 

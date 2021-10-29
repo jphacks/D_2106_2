@@ -6,6 +6,7 @@ type FakeImageRepository struct {
 	FakeGetImagesByAlbumId      func(albumId int) ([]*domain.Image, error)
 	FakeGetImagesByCoordinateId func(coordinateId int) ([]*domain.Image, error)
 	FakeStoreImages             func(images []*domain.Image) ([]int, error)
+	FakeGetImagesById           func(imageId int) (*domain.Image, error)
 }
 
 func (repo FakeImageRepository) GetImagesByAlbumId(albumId int) ([]*domain.Image, error) {
@@ -18,4 +19,8 @@ func (repo FakeImageRepository) GetImagesByCoordinateId(coordinateId int) ([]*do
 
 func (repo FakeImageRepository) StoreImages(images []*domain.Image) ([]int, error) {
 	return repo.FakeStoreImages(images)
+}
+
+func (repo FakeImageRepository) GetImagesById(imageId int) (*domain.Image, error) {
+	return repo.FakeGetImagesById(imageId)
 }

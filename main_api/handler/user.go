@@ -1,7 +1,6 @@
 package handler
 
 import (
-	"errors"
 	"log"
 	"net/http"
 
@@ -9,12 +8,6 @@ import (
 	"github.com/jphacks/D_2106_2/usecase"
 
 	"github.com/gin-gonic/gin"
-)
-
-var (
-	InvalidRequest     = errors.New("Invalid reqquest parameter")
-	FieldIsNull        = errors.New("username or deviceId field is null")
-	FailedRegisterUser = errors.New("register usesr failed")
 )
 
 type UserHandler struct {
@@ -47,7 +40,7 @@ func (handler *UserHandler) RegisterUser(c *gin.Context) {
 	}
 
 	if req.Username == "" || req.DeviceId == "" {
-		err = FieldIsNull
+		err = UserFieldIsNull
 		log.Print(err)
 		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
 		return

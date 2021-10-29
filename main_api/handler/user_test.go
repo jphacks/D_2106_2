@@ -40,7 +40,7 @@ func TestRegisterUser(t *testing.T) {
 			userReq: RegisterUserRequest{
 				DeviceId: "test-device-id",
 			},
-			want: gin.H{"error": FieldIsNull.Error()},
+			want: gin.H{"error": UserFieldIsNull.Error()},
 			code: http.StatusBadRequest,
 		},
 	}

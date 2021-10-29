@@ -37,7 +37,7 @@ func (uc *AlbumUsecase) CreateNewAlbum(
 	isPublic bool,
 	thumbnailImageId int,
 ) (int, error) {
-	album := &domain.Album{
+	album := &domain.AlbumDB{
 		UserId:           userId,
 		Title:            title,
 		StartedAt:        utils.UnixToTime(startAt),

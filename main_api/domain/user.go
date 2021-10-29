@@ -1,8 +1,8 @@
 package domain
 
 type User struct {
-	Id              string
-	Name            string
-	ProfileImageUrl string
-	Introduction    string
+	Id              string `json:"id"`
+	Name            string `json:"name"`
+	ProfileImageUrl string `json:"profileImageUrl"`
+	Introduction    string `json:"introduction"`
 }

@@ -29,7 +29,9 @@ func (uc *ImageUsecase) UploadImages(albumId int, images []multipart.File, names
 	coordinates, _ := uc.CoordinateRepo.GetCoordinatesByAlbumId(albumId)
 
 	for _, name := range names {
-		unixtimeStr := strings.Split(name, ".")[0]
+
+		removedPrefix := strings.Split(name, "-")[1]
+		unixtimeStr := strings.Split(removedPrefix, ".")[0]
 		unixtime, _ := strconv.Atoi(unixtimeStr)
 
 		imageProps = append(imageProps,
@@ -77,9 +79,11 @@ func (uc *ImageUsecase) UploadImages(albumId int, images []multipart.File, names
 		parsedUrl := strings.Split(url, "/")
 		for _, image := range imageProps {
 			if image.Name == parsedUrl[len(parsedUrl)-1] {
+
 				dbInputs = append(dbInputs,
 					&domain.Image{
 						Url:          url,
+						Name:         image.Name,
 						AlbumId:      albumId,
 						CreatedAt:    image.CreatedAt,
 						CoordinateId: image.CoordinateId,

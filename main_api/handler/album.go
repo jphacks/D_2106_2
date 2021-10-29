@@ -17,14 +17,22 @@ type AlbumHandler struct {
 	uc usecase.AlbumUsecase
 }
 
+type GetAllAlbumsResponse struct {
+	Albums []*domain.AlbumResponse `json:"albums"`
+}
+
 type PostAlbumRequest struct {
-	Locations        []*domain.Location `json:"locations"`
-	UserId           string             `json:"userId"`
-	Title            string             `json:"title"`
-	StartAt          int64              `json:"startedAt"`
-	EndAt            int64              `json:"endedAt"`
-	IsPublic         bool               `json:"isPublic"`
-	ThumbnailImageId int                `json:"thumbnailImageId"`
+	Locations []*domain.Location `json:"locations"`
+	UserId    string             `json:"userId"`
+	Title     string             `json:"title"`
+	StartAt   int64              `json:"startedAt"`
+	EndAt     int64              `json:"endedAt"`
+	IsPublic  bool               `json:"isPublic"`
+}
+
+type PostAlbumThumbnailRequest struct {
+	AlbumId            int    `json:"albumId"`
+	ThumbnailImageName string `json:"thumbnailImageName"`
 }
 
 type PostAlbumResponse struct {
@@ -49,7 +57,13 @@ func (handler *AlbumHandler) GetAllAlbums(c *gin.Context) {
 		return
 	}
 
-	c.JSON(http.StatusOK, gin.H{"data": albums})
+	response := make([]*domain.AlbumResponse, len(albums))
+	for i, album := range albums {
+		albumResponse := album.ToResponse()
+		response[i] = albumResponse
+	}
+
+	c.JSON(http.StatusOK, gin.H{"data": GetAllAlbumsResponse{response}})
 }
 
 func (handler *AlbumHandler) GetUserAlbums(c *gin.Context) {
@@ -68,7 +82,13 @@ func (handler *AlbumHandler) GetUserAlbums(c *gin.Context) {
 		return
 	}
 
-	c.JSON(http.StatusOK, gin.H{"data": albums})
+	response := make([]*domain.AlbumResponse, len(albums))
+	for i, album := range albums {
+		albumResponse := album.ToResponse()
+		response[i] = albumResponse
+	}
+
+	c.JSON(http.StatusOK, gin.H{"data": GetAllAlbumsResponse{response}})
 }
 
 func (handler *AlbumHandler) GetAlbumDetail(c *gin.Context) {
@@ -148,7 +168,6 @@ func (handler *AlbumHandler) PostAlbum(c *gin.Context) {
 		req.StartAt,
 		req.EndAt,
 		req.IsPublic,
-		req.ThumbnailImageId,
 	)
 	if err != nil {
 		log.Print(err)
@@ -159,4 +178,22 @@ func (handler *AlbumHandler) PostAlbum(c *gin.Context) {
 	res := &PostAlbumResponse{Id: albumId}
 
 	c.JSON(http.StatusOK, gin.H{"data": res})
+}
+
+func (handler *AlbumHandler) PostAlbumThumbnail(c *gin.Context) {
+
+	req := PostAlbumThumbnailRequest{}
+	err := c.ShouldBindJSON(&req)
+	if err != nil {
+		log.Print(err)
+		c.JSON(http.StatusBadRequest, gin.H{"error": InvalidRequest.Error()})
+		return
+	}
+
+	if err := handler.uc.UpdateThumbnailAndSpot(req.AlbumId, req.ThumbnailImageName); err != nil {
+		log.Print(err)
+		c.JSON(http.StatusInternalServerError, gin.H{"error": FailedUpdateThumbnailAndSpot.Error()})
+		return
+	}
+	c.JSON(http.StatusOK, gin.H{"request": "success"})
 }

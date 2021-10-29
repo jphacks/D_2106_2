@@ -73,6 +73,7 @@ func main() {
 	r.GET("/albums/user", func(c *gin.Context) { albumHandler.GetUserAlbums(c) })
 	r.GET("/album/detail", func(c *gin.Context) { albumHandler.GetAlbumDetail(c) })
 	r.POST("/album", func(c *gin.Context) { albumHandler.PostAlbum(c) })
+	r.POST("/album/thumbnail", func(c *gin.Context) { albumHandler.PostAlbumThumbnail(c) })
 
 	r.POST("/upload/image", func(c *gin.Context) { imageHandler.UploadImages(c) })
 

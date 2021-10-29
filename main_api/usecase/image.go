@@ -29,7 +29,9 @@ func (uc *ImageUsecase) UploadImages(albumId int, images []multipart.File, names
 	coordinates, _ := uc.CoordinateRepo.GetCoordinatesByAlbumId(albumId)
 
 	for _, name := range names {
-		unixtimeStr := strings.Split(name, ".")[0]
+
+		removedPrefix := strings.Split(name, "-")[1]
+		unixtimeStr := strings.Split(removedPrefix, ".")[0]
 		unixtime, _ := strconv.Atoi(unixtimeStr)
 
 		imageProps = append(imageProps,

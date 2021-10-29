@@ -26,6 +26,7 @@ type ResponseLocation struct {
 
 type ResponseLocationData struct {
 	Location []ResponseLocation `json:"location"`
+	Route    []*domain.Location `json:"route"`
 }
 
 func (uc *AlbumUsecase) CreateNewAlbum(
@@ -129,7 +130,7 @@ func (uc *AlbumUsecase) ClusteringGpsPoint(
 	return clusterData, nil
 }
 
-func (uc *AlbumUsecase) ClusteringData2Response(tempCoordinates *[]domain.Coordinate) (*ResponseLocationData, error) {
+func (uc *AlbumUsecase) ClusteringData2Response(albumId int, tempCoordinates *[]domain.Coordinate) (*ResponseLocationData, error) {
 	var locationList []ResponseLocation
 	for _, tempCoordinate := range *tempCoordinates {
 		coordinate, err := uc.CoordinateRepo.GetCoordinateById(tempCoordinate.Id)
@@ -152,8 +153,16 @@ func (uc *AlbumUsecase) ClusteringData2Response(tempCoordinates *[]domain.Coordi
 			ImageUrls: imageUrls,
 		})
 	}
+
+	route, err := uc.CoordinateRepo.GetRouteByAlbumId(albumId)
+	if err != nil {
+		return nil, err
+	}
+
 	locationData := ResponseLocationData{
 		Location: locationList,
+		Route:    route,
 	}
+
 	return &locationData, nil
 }

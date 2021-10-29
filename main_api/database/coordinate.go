@@ -54,3 +54,17 @@ func (repo *CoordinateRepository) GetCoordinatesByAlbumId(albumId int) ([]*domai
 
 	return coordinates, nil
 }
+
+func (repo *CoordinateRepository) GetRouteByAlbumId(albumId int) ([]*domain.Location, error) {
+	route := []*domain.Location{}
+	columns := []string{
+		"latitude",
+		"longitude",
+	}
+	result := repo.SqlHandler.Conn.Model(&domain.Coordinate{}).Select(columns).Where("album_id = ? AND is_show = true", albumId).Find(&route)
+	if err := result.Error; err != nil {
+		return nil, err
+	}
+
+	return route, nil
+}

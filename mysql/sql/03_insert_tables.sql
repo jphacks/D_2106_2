@@ -1,29 +1,29 @@
 -- coordinates
-INSERT INTO coordinates (album_id, timestamp, latitude, longitude) VALUES (1, '2021-10-23 13:12:35.000000', 35.1234, 135.1234);
-INSERT INTO coordinates (album_id, timestamp, latitude, longitude) VALUES (1, '2021-10-23 13:25:35.000000', 37.1234, 137.1234);
-INSERT INTO coordinates (album_id, timestamp, latitude, longitude) VALUES (1, '2021-10-23 13:45:35.000000', 36.1234, 139.1234);
-INSERT INTO coordinates (album_id, timestamp, latitude, longitude) VALUES (1, '2021-10-23 14:12:35.000000', 34.1234, 135.1234);
-INSERT INTO coordinates (album_id, timestamp, latitude, longitude) VALUES (1, '2021-10-23 14:25:35.000000', 37.1234, 137.1234);
-INSERT INTO coordinates (album_id, timestamp, latitude, longitude) VALUES (1, '2021-10-23 14:45:35.000000', 39.1234, 139.1234);
-INSERT INTO coordinates (album_id, timestamp, latitude, longitude) VALUES (1, '2021-10-23 13:12:35.000000', 35.1234, 132.1234);
-INSERT INTO coordinates (album_id, timestamp, latitude, longitude) VALUES (1, '2021-10-23 13:25:35.000000', 37.1234, 135.1234);
-INSERT INTO coordinates (album_id, timestamp, latitude, longitude) VALUES (1, '2021-10-23 13:45:35.000000', 36.1234, 133.1234);
-INSERT INTO coordinates (album_id, timestamp, latitude, longitude) VALUES (1, '2021-10-23 14:12:35.000000', 34.1234, 136.1234);
-INSERT INTO coordinates (album_id, timestamp, latitude, longitude) VALUES (1, '2021-10-23 14:25:35.000000', 37.1234, 132.1234);
-INSERT INTO coordinates (album_id, timestamp, latitude, longitude) VALUES (1, '2021-10-23 14:45:35.000000', 39.1234, 135.1234);
+INSERT INTO coordinates (album_id, timestamp, latitude, longitude, is_show) VALUES (1, '2021-10-23 13:12:35.000000', 35.1234, 135.1234, true);
+INSERT INTO coordinates (album_id, timestamp, latitude, longitude, is_show) VALUES (1, '2021-10-23 13:25:35.000000', 37.1234, 137.1234, false);
+INSERT INTO coordinates (album_id, timestamp, latitude, longitude, is_show) VALUES (1, '2021-10-23 13:45:35.000000', 36.1234, 139.1234, true);
+INSERT INTO coordinates (album_id, timestamp, latitude, longitude, is_show) VALUES (1, '2021-10-23 14:12:35.000000', 34.1234, 135.1234, false);
+INSERT INTO coordinates (album_id, timestamp, latitude, longitude, is_show) VALUES (1, '2021-10-23 14:25:35.000000', 37.1234, 137.1234, true);
+INSERT INTO coordinates (album_id, timestamp, latitude, longitude, is_show) VALUES (1, '2021-10-23 14:45:35.000000', 39.1234, 139.1234, false);
+INSERT INTO coordinates (album_id, timestamp, latitude, longitude, is_show) VALUES (1, '2021-10-23 13:12:35.000000', 35.1234, 132.1234, true);
+INSERT INTO coordinates (album_id, timestamp, latitude, longitude, is_show) VALUES (1, '2021-10-23 13:25:35.000000', 37.1234, 135.1234, false);
+INSERT INTO coordinates (album_id, timestamp, latitude, longitude, is_show) VALUES (1, '2021-10-23 13:45:35.000000', 36.1234, 133.1234, true);
+INSERT INTO coordinates (album_id, timestamp, latitude, longitude, is_show) VALUES (1, '2021-10-23 14:12:35.000000', 34.1234, 136.1234, false);
+INSERT INTO coordinates (album_id, timestamp, latitude, longitude, is_show) VALUES (1, '2021-10-23 14:25:35.000000', 37.1234, 132.1234, true);
+INSERT INTO coordinates (album_id, timestamp, latitude, longitude, is_show) VALUES (1, '2021-10-23 14:45:35.000000', 39.1234, 135.1234, false);
 
-INSERT INTO coordinates (album_id, timestamp, latitude, longitude) VALUES (2, '2021-10-24 13:12:35.000000', 26.2455, 128.2355);
-INSERT INTO coordinates (album_id, timestamp, latitude, longitude) VALUES (2, '2021-10-24 13:25:35.000000', 37.1234, 137.1234);
-INSERT INTO coordinates (album_id, timestamp, latitude, longitude) VALUES (2, '2021-10-24 13:45:35.000000', 36.1234, 139.1234);
-INSERT INTO coordinates (album_id, timestamp, latitude, longitude) VALUES (2, '2021-10-24 14:12:35.000000', 34.1234, 135.1234);
-INSERT INTO coordinates (album_id, timestamp, latitude, longitude) VALUES (2, '2021-10-24 14:25:35.000000', 37.1234, 137.1234);
-INSERT INTO coordinates (album_id, timestamp, latitude, longitude) VALUES (2, '2021-10-24 14:45:35.000000', 39.1234, 139.1234);
-INSERT INTO coordinates (album_id, timestamp, latitude, longitude) VALUES (2, '2021-10-24 13:12:35.000000', 30.1234, 130.1234);
-INSERT INTO coordinates (album_id, timestamp, latitude, longitude) VALUES (2, '2021-10-24 13:25:35.000000', 37.1234, 137.1234);
-INSERT INTO coordinates (album_id, timestamp, latitude, longitude) VALUES (2, '2021-10-24 13:45:35.000000', 36.1234, 139.1234);
-INSERT INTO coordinates (album_id, timestamp, latitude, longitude) VALUES (2, '2021-10-24 14:12:35.000000', 34.1234, 135.1234);
-INSERT INTO coordinates (album_id, timestamp, latitude, longitude) VALUES (2, '2021-10-24 14:25:35.000000', 37.1234, 137.1234);
-INSERT INTO coordinates (album_id, timestamp, latitude, longitude) VALUES (2, '2021-10-24 14:45:35.000000', 39.1234, 139.1234);
+INSERT INTO coordinates (album_id, timestamp, latitude, longitude, is_show) VALUES (2, '2021-10-24 13:12:35.000000', 26.2455, 128.2355, true);
+INSERT INTO coordinates (album_id, timestamp, latitude, longitude, is_show) VALUES (2, '2021-10-24 13:25:35.000000', 37.1234, 137.1234, false);
+INSERT INTO coordinates (album_id, timestamp, latitude, longitude, is_show) VALUES (2, '2021-10-24 13:45:35.000000', 36.1234, 139.1234, true);
+INSERT INTO coordinates (album_id, timestamp, latitude, longitude, is_show) VALUES (2, '2021-10-24 14:12:35.000000', 34.1234, 135.1234, false);
+INSERT INTO coordinates (album_id, timestamp, latitude, longitude, is_show) VALUES (2, '2021-10-24 14:25:35.000000', 37.1234, 137.1234, true);
+INSERT INTO coordinates (album_id, timestamp, latitude, longitude, is_show) VALUES (2, '2021-10-24 14:45:35.000000', 39.1234, 139.1234, false);
+INSERT INTO coordinates (album_id, timestamp, latitude, longitude, is_show) VALUES (2, '2021-10-24 13:12:35.000000', 30.1234, 130.1234, true);
+INSERT INTO coordinates (album_id, timestamp, latitude, longitude, is_show) VALUES (2, '2021-10-24 13:25:35.000000', 37.1234, 137.1234, false);
+INSERT INTO coordinates (album_id, timestamp, latitude, longitude, is_show) VALUES (2, '2021-10-24 13:45:35.000000', 36.1234, 139.1234, true);
+INSERT INTO coordinates (album_id, timestamp, latitude, longitude, is_show) VALUES (2, '2021-10-24 14:12:35.000000', 34.1234, 135.1234, false);
+INSERT INTO coordinates (album_id, timestamp, latitude, longitude, is_show) VALUES (2, '2021-10-24 14:25:35.000000', 37.1234, 137.1234, true);
+INSERT INTO coordinates (album_id, timestamp, latitude, longitude, is_show) VALUES (2, '2021-10-24 14:45:35.000000', 39.1234, 139.1234, false);
 
 
 -- albums

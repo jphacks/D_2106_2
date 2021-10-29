@@ -17,6 +17,17 @@ type AlbumHandler struct {
 	uc usecase.AlbumUsecase
 }
 
+type GetAllAlbumsResponse struct {
+	Id                int    `json:"id"`
+	UserId            string `json:"userId"`
+	Title             string `json:"title"`
+	StartedAt         int64  `json:"starteAt"`
+	EndedAt           int64  `json:"endedAt"`
+	IsPublic          bool   `json:"isPubliuc"`
+	ThumbnailImageUrl string `json:"thumbnailImage_url"`
+	CreatedAt         int64  `json:"createdAt"`
+}
+
 type PostAlbumRequest struct {
 	Locations        []*domain.Location `json:"locations"`
 	UserId           string             `json:"userId"`
@@ -47,6 +58,11 @@ func (handler *AlbumHandler) GetAllAlbums(c *gin.Context) {
 		log.Print(err)
 		c.JSON(http.StatusInternalServerError, gin.H{"error": FailedGetAlbum.Error()})
 		return
+	}
+
+	response := &GetAllAlbumsResponse{
+		Id:albums.Id,
+		UserId: ,
 	}
 
 	c.JSON(http.StatusOK, gin.H{"data": albums})

@@ -27,7 +27,7 @@ func GetMunicipalitiesByGeoLocation(latitude float64, longtitude float64) (strin
 	url := "http://geoapi.heartrails.com/api/json"
 	request, err := http.NewRequest("GET", url, nil)
 	if err != nil {
-		log.Fatal(err)
+		log.Print(err)
 		return "", "", err
 	}
 
@@ -45,21 +45,21 @@ func GetMunicipalitiesByGeoLocation(latitude float64, longtitude float64) (strin
 
 	response, err := client.Do(request)
 	if err != nil {
-		log.Fatal(err)
+		log.Print(err)
 		return "", "", err
 	}
 	defer response.Body.Close()
 
 	body, err := ioutil.ReadAll(response.Body)
 	if err != nil {
-		log.Fatal(err)
+		log.Print(err)
 		return "", "", err
 	}
 
 	var res Response
 	err = json.Unmarshal(body, &res)
 	if err != nil {
-		log.Fatal(err)
+		log.Print(err)
 		return "", "", err
 	}
 

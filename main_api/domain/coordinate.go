@@ -14,7 +14,7 @@ type Coordinate struct {
 }
 
 type Location struct {
-	Latitude  float64
-	Longitude float64
-	Timestamp int64
+	Latitude  float64 `json:"latitude"`
+	Longitude float64 `json:"longitude"`
+	Timestamp int64   `json:"timestamp"`
 }

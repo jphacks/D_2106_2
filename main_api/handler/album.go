@@ -18,14 +18,7 @@ type AlbumHandler struct {
 }
 
 type GetAllAlbumsResponse struct {
-	Id                int    `json:"id"`
-	UserId            string `json:"userId"`
-	Title             string `json:"title"`
-	StartedAt         int64  `json:"starteAt"`
-	EndedAt           int64  `json:"endedAt"`
-	IsPublic          bool   `json:"isPubliuc"`
-	ThumbnailImageUrl string `json:"thumbnailImage_url"`
-	CreatedAt         int64  `json:"createdAt"`
+	Albums []*domain.AlbumResponse `json:"albums"`
 }
 
 type PostAlbumRequest struct {
@@ -60,12 +53,13 @@ func (handler *AlbumHandler) GetAllAlbums(c *gin.Context) {
 		return
 	}
 
-	response := &GetAllAlbumsResponse{
-		Id:albums.Id,
-		UserId: ,
+	response := make([]*domain.AlbumResponse, len(albums))
+	for i, album := range albums {
+		albumResponse := album.ToResponse()
+		response[i] = albumResponse
 	}
 
-	c.JSON(http.StatusOK, gin.H{"data": albums})
+	c.JSON(http.StatusOK, gin.H{"data": GetAllAlbumsResponse{response}})
 }
 
 func (handler *AlbumHandler) GetUserAlbums(c *gin.Context) {
@@ -84,7 +78,13 @@ func (handler *AlbumHandler) GetUserAlbums(c *gin.Context) {
 		return
 	}
 
-	c.JSON(http.StatusOK, gin.H{"data": albums})
+	response := make([]*domain.AlbumResponse, len(albums))
+	for i, album := range albums {
+		albumResponse := album.ToResponse()
+		response[i] = albumResponse
+	}
+
+	c.JSON(http.StatusOK, gin.H{"data": GetAllAlbumsResponse{response}})
 }
 
 func (handler *AlbumHandler) GetAlbumDetail(c *gin.Context) {

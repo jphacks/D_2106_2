@@ -56,6 +56,6 @@ type AlbumResponse struct {
 	EndedAt           int64  `json:"endedAt"`
 	IsPublic          bool   `json:"isPubliuc"`
 	Spot              string `json:"spot"`
-	ThumbnailImageUrl string `json:"thumbnailImage_url"`
+	ThumbnailImageUrl string `json:"thumbnailImageUrl"`
 	CreatedAt         int64  `json:"createdAt"`
 }

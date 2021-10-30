@@ -7,3 +7,7 @@ sample-curl.txt
 
 tmp/
 __pycache__/
+
+*jq
+*json
+*csv

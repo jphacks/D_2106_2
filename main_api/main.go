@@ -92,3 +92,5 @@ func main() {
 
 	r.Run(":" + port)
 }
+
+//出典:「位置参照情報」(国土交通省)の加工情報・「HeartRails Geo API」(HeartRails Inc.)

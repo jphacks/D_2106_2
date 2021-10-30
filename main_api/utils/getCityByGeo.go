@@ -2,7 +2,6 @@ package utils
 
 import (
 	"encoding/json"
-	"errors"
 	"io/ioutil"
 	"log"
 	"net/http"
@@ -78,7 +77,8 @@ func GetMunicipalitiesByGeoLocation(latitude float64, longtitude float64) (strin
 			return "", "", err
 		}
 
-		return "", "", errors.New(errRes.Response.Error)
+		// return "", "", errors.New(errRes.Response.Error)
+		return "海外", "", nil
 	}
 	return res.Response.Location[0].City, res.Response.Location[0].Prefecture, nil
 }

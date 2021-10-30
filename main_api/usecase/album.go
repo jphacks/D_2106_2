@@ -53,10 +53,10 @@ func (uc *AlbumUsecase) CreateNewAlbum(
 
 	coordinates := make([]*domain.Coordinate, len(locations))
 	for i, locate := range locations {
-		isShow := false
-		if i%10 == 0 || i+1 == len(locations) {
-			isShow = true
-		}
+		isShow := true
+		// if i%10 == 0 || i+1 == len(locations) {
+		// 	isShow = true
+		// }
 		coordinates[i] = &domain.Coordinate{
 			AlbumId:   albumId,
 			Timestamp: utils.UnixToTime(locate.Timestamp),

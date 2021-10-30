@@ -2,7 +2,6 @@ package utils
 
 import (
 	"encoding/json"
-	"errors"
 	"io/ioutil"
 	"log"
 	"net/http"
@@ -21,6 +20,14 @@ type Location struct {
 
 type Response struct {
 	Response Location `json:"response"`
+}
+
+type Error struct {
+	Error string `json:"error"`
+}
+
+type ErrorResponse struct {
+	Response Error `json:"response"`
 }
 
 func GetMunicipalitiesByGeoLocation(latitude float64, longtitude float64) (string, string, error) {
@@ -57,14 +64,21 @@ func GetMunicipalitiesByGeoLocation(latitude float64, longtitude float64) (strin
 	}
 
 	var res Response
-	err = json.Unmarshal(body, &res)
-	if err != nil {
+	if err := json.Unmarshal(body, &res); err != nil {
 		log.Print(err)
 		return "", "", err
 	}
 
 	if len(res.Response.Location) == 0 {
-		return "", "", errors.New("coudn't obtain municipalities")
+		var errRes ErrorResponse
+
+		if err := json.Unmarshal(body, &errRes); err != nil {
+			log.Print(err)
+			return "", "", err
+		}
+
+		// return "", "", errors.New(errRes.Response.Error)
+		return "海外", "", nil
 	}
 	return res.Response.Location[0].City, res.Response.Location[0].Prefecture, nil
 }
